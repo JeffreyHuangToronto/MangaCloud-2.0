@@ -14,7 +14,7 @@ struct ContentView: View {
         NavigationView{
             VStack{
                 LatestView(viewModel: latest)
-            }.navigationTitle("Main").hidden()
+            }.navigationTitle("Main")
         }
         
         //        ChapterView(viewModel: chapterView)
