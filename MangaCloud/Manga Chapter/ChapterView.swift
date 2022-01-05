@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChapterView: View {
     @ObservedObject var viewModel: ChapterViewModel
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     
     @State var toggle = false
     
@@ -18,15 +18,14 @@ struct ChapterView: View {
     }
     
     var body: some View {
-        
-        
         ScrollView {
-            VStack{
-                let urls = viewModel.getChapterUrls()
-                if (!viewModel.isLoaded()){
-                    Text("Loading Chapter\n Please Wait")
-                }
-                else{
+            //            VStack{
+            let urls = viewModel.getChapterUrls()
+            if (!viewModel.isLoaded()){
+                Text("Loading Chapter\n Please Wait")
+            }
+            else{
+                VStack {
                     ForEach(urls, id: \.self){ i in
                         AsyncImage(url: URL(string: i))
                         { image in
@@ -39,7 +38,8 @@ struct ChapterView: View {
                     }
                 }
             }
-            .frame(width: UIScreen.main.bounds.width)
+            //            }
+            //            .frame(width: UIScreen.main.bounds.width)
         }
         .onTapGesture {
             toggle.toggle()
@@ -73,7 +73,7 @@ struct ChapterView: View {
         .overlay(alignment: .topLeading, content: {
             if (toggle){
                 Button("<"){
-                    presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 }
                 .containerShape(Rectangle())
                 .frame(width: 30, height: 30, alignment: .topLeading)
@@ -93,5 +93,4 @@ struct ChapterView_Previews: PreviewProvider {
         ChapterView(manga: MangaItem(_id: "", title: "",summary: "", cover_url: "", chapter_names: Array<Double>()), chapter_index: 0)
     }
 }
-
 

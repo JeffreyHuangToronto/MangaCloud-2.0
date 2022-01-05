@@ -14,9 +14,8 @@ struct MangaView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
+            LazyVStack {
                 Text(viewModel.getTitle())
-                Text(viewModel.getCoverUrl())
                 AsyncImage(url: URL(string: viewModel.getCoverUrl())){ image in
                     image
                         .resizable()
@@ -28,7 +27,7 @@ struct MangaView: View {
                 
                 Text(viewModel.getSummary())
                     .lineLimit(toggle ? 2 : nil)
-                    .foregroundColor(.black)
+                    .foregroundColor(Color(.label))
                     .padding(10)
                     .onTapGesture {
                         toggle.toggle()

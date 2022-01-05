@@ -47,7 +47,6 @@ struct ChapterModel{
 
 
 struct MangaChapter: Codable{
-    let id = UUID()
     var manga_page_urls: Array<String>
 }
 

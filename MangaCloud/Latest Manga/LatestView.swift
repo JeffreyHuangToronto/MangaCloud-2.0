@@ -14,18 +14,23 @@ struct LatestView: View {
         let latest = viewModel.getLatestManga().latest
         
         if  latest.count != 0 {
-            ScrollView {
-                LazyVGrid(columns: [GridItem(), GridItem()]){
-                    ForEach(latest, id: \.self) { manga in
-                        let mangaViewModel = MangaViewModel(manga: manga)
-                        NavigationLink(destination: MangaView(viewModel: mangaViewModel)){
-                            MangaItemView(manga: manga)
+            NavigationView {
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(), GridItem()]){
+                        ForEach(latest, id: \.self) { manga in
+                            let mangaViewModel = MangaViewModel(manga: manga)
+                            NavigationLink(destination: MangaView(viewModel: mangaViewModel)){
+                                MangaItemView(manga: manga)
+                            }
+                            //                        .border(Color.red)
+                            .padding(2)
                         }
-//                        .border(Color.red)
-                        .padding(2)
                     }
                 }
             }
+            .navigationBarTitle("")
+            .navigationBarBackButtonHidden(true)
+            .navigationBarHidden(true)
         }
     }
 }
@@ -35,23 +40,27 @@ struct MangaItemView: View {
     var manga: MangaItem
     
     var body: some View {
-        LazyVStack(alignment: .leading, spacing: 0){
-            AsyncImage(url: URL(string: manga.cover_url)) { phase in
+        
+        AsyncImage(url: URL(string: manga.cover_url)) { phase in
+            LazyVStack(alignment: .leading, spacing: 0){
                 if let image = phase.image {
                     image
                         .resizable()
                         .aspectRatio(3/4, contentMode: .fill) // Displays the loaded image.
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                        .shadow(color: Color(.label), radius: 5, x: 5, y: 5)
+                        .padding()
+                    Text(manga.title + "\n")
+                        .foregroundColor(Color(.label))
+                        .lineLimit(2)
                 } else if phase.error != nil {
                     Color.red // Indicates an error.
+                    
                 } else {
                     Color.blue // Acts as a placeholder.
                 }
             }
-            Text(manga.title + "\n")
-                .foregroundColor(.black)
-                .lineLimit(2)
         }
-//        .fixedSize(horizontal: true, vertical: true)
     }
 }
 
