@@ -14,20 +14,18 @@ struct LatestView: View {
         let latest = viewModel.getLatestManga().latest
         
         if  latest.count != 0 {
-            NavigationView {
-                ScrollView {
-                    LazyVGrid(columns: [GridItem(), GridItem()]){
-                        ForEach(latest, id: \.self) { manga in
-                            let mangaViewModel = MangaViewModel(manga: manga)
-                            NavigationLink(destination: MangaView(viewModel: mangaViewModel)){
-                                MangaItemView(manga: manga)
-                            }
-                            //                        .border(Color.red)
-                            .padding(2)
+            ScrollView {
+                LazyVGrid(columns: [GridItem(), GridItem()]){
+                    ForEach(latest, id: \.self) { manga in
+                        let mangaViewModel = MangaViewModel(manga: manga)
+                        NavigationLink(destination: MangaView(viewModel: mangaViewModel)){
+                            MangaItemView(manga: manga)
                         }
+                        //                            .padding(2)
                     }
                 }
             }
+            .navigationViewStyle(StackNavigationViewStyle())
             .navigationBarTitle("")
             .navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)

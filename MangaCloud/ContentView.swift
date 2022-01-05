@@ -12,24 +12,26 @@ struct ContentView: View {
     
     var body: some View {
         //        NavigationView{
-        VStack{
-            
+        //        VStack{
+        //
+        NavigationView{
             TabView {
-                Text("View 1")
+                Text("Library")
                     .tabItem {
-                        Label("Library", systemImage: "bookmarks")
+                        Label("Library", systemImage: "bookmark.circle.fill")
                     }
                 
                 LatestView(viewModel: latest)
                     .tabItem {
-                        Label("Latest", systemImage: "")
+                        Label("Latest", systemImage: "books.vertical.fill")
                     }
                 
-                Text("View 3")
+                Text("Settings")
                     .tabItem {
-                        Label("Community", systemImage: "theatermasks")
+                        Label("Settings", systemImage: "gearshape.fill")
                     }
             }
+            //        }
         }
         .navigationBarTitle("")
         .navigationBarBackButtonHidden(true)

@@ -17,15 +17,19 @@ struct ChapterView: View {
         viewModel = ChapterViewModel(manga: manga, chapter_index: chapter_index)
     }
     
+    func viewDidLoad(){
+//        self.tabBarController?.tabBar.isHidden = true.
+    }
+    
     var body: some View {
         ScrollView {
-            //            VStack{
-            let urls = viewModel.getChapterUrls()
-            if (!viewModel.isLoaded()){
-                Text("Loading Chapter\n Please Wait")
-            }
-            else{
-                VStack {
+            VStack {
+                let urls = viewModel.getChapterUrls()
+                if (!viewModel.isLoaded()){
+                    Text("Loading Chapter\n Please Wait")
+                }
+                else{
+                    
                     ForEach(urls, id: \.self){ i in
                         AsyncImage(url: URL(string: i))
                         { image in
@@ -38,9 +42,8 @@ struct ChapterView: View {
                     }
                 }
             }
-            //            }
-            //            .frame(width: UIScreen.main.bounds.width)
         }
+        
         .onTapGesture {
             toggle.toggle()
             print("Toggle \(toggle)")
