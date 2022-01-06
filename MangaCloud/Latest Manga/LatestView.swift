@@ -30,6 +30,9 @@ struct LatestView: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
         }
+        else{
+            Text("Loading Manga")
+        }
     }
 }
 
@@ -37,27 +40,39 @@ struct LatestView: View {
 struct MangaItemView: View {
     var manga: MangaItem
     
+    @State var isHover = false
+    
+    
     var body: some View {
         
         AsyncImage(url: URL(string: manga.cover_url)) { phase in
-            LazyVStack(alignment: .leading, spacing: 0){
+            VStack(alignment: .leading){
                 if let image = phase.image {
                     image
                         .resizable()
                         .aspectRatio(3/4, contentMode: .fill) // Displays the loaded image.
                         .clipShape(RoundedRectangle(cornerRadius: 5))
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .shadow(color: Color(.label), radius: 5, x: 5, y: 5)
-                        .padding()
+                        .border(.red)
                     Text(manga.title + "\n")
                         .foregroundColor(Color(.label))
+                        .font(.system(size: 12, weight: .bold, design: .monospaced))
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+//                        .padding(3)
+                        .border(.red)
                         .lineLimit(2)
+                        
                 } else if phase.error != nil {
                     Color.red // Indicates an error.
-                    
+                    ProgressView()
                 } else {
                     Color.blue // Acts as a placeholder.
                 }
-            }
+                
+            }.padding()
+                .border(Color.red)
         }
     }
 }

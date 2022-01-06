@@ -93,7 +93,7 @@ struct ChapterView: View {
 struct ChapterView_Previews: PreviewProvider {
     static var previews: some View {
         
-        ChapterView(manga: MangaItem(_id: "", title: "",summary: "", cover_url: "", chapter_names: Array<Double>()), chapter_index: 0)
+        ChapterView(manga: MangaItem(_id: "manga-fc918572", title: "My Girlfriend Is A Dragon",summary: "This adventure started with a young alchemist, who tried to rescue a princess, but this princess turned out to be a dragon. What will result in this strange, but funny meeting?", cover_url: "https://ww.mangakakalot.tv/mangaimage/fc918572.jpg", chapter_names: [1,2]), chapter_index: 1)
     }
 }
 
