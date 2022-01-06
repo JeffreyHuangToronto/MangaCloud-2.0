@@ -34,11 +34,13 @@ struct MangaView: View {
                 }
                 
                 ForEach(0..<viewModel.getChapterNames().count){ index in
-                    NavigationLink {
-                        ChapterView(manga: viewModel.getManga(), chapter_index: index)
-                            .navigationBarHidden(true)
-                    } label: {
-                        Text("Test Chapter \(viewModel.getChapterNames()[index].removeZerosFromEnd())")
+                    LazyVGrid(columns: [GridItem(), GridItem()]){
+                        NavigationLink {
+                            ChapterView(manga: viewModel.getManga(), chapter_index: index)
+                                .navigationBarHidden(true)
+                        } label: {
+                            Text("Test Chapter \(viewModel.getChapterNames()[index].removeZerosFromEnd())")
+                        }
                     }
                 }
             }

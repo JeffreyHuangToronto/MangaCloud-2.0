@@ -13,7 +13,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView{
             TabView {
-                Text("Library")
+                LibraryView()
                     .tabItem {
                         Label("Library", systemImage: "bookmark.circle.fill")
                     }
@@ -29,6 +29,7 @@ struct ContentView: View {
                     }
             }
         }.navigationViewStyle(StackNavigationViewStyle())
+        
     }
     
     struct ContentView_Previews: PreviewProvider {

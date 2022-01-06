@@ -15,13 +15,12 @@ struct LatestView: View {
         
         if  latest.count != 0 {
             ScrollView {
-                LazyVGrid(columns: [GridItem(), GridItem()]){
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
                     ForEach(latest, id: \.self) { manga in
                         let mangaViewModel = MangaViewModel(manga: manga)
                         NavigationLink(destination: MangaView(viewModel: mangaViewModel)){
                             MangaItemView(manga: manga)
                         }
-                        //                            .padding(2)
                     }
                 }
             }
