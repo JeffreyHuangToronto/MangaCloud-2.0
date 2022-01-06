@@ -51,7 +51,7 @@ struct ChapterView: View {
         .overlay(alignment: .bottom) {
             if (toggle){
                 RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.gray)
+                    .fill(Color(UIColor.systemGray6))
                     .edgesIgnoringSafeArea(.bottom)
                     .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 13)
                     .overlay(alignment: .top) {
