@@ -53,7 +53,7 @@ struct ChapterView: View {
                 RoundedRectangle(cornerRadius: 15)
                     .fill(Color.gray)
                     .edgesIgnoringSafeArea(.bottom)
-                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 2)
+                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 13)
                     .overlay(alignment: .top) {
                         VStack {
                             Text("Chapter \(viewModel.getChapterName().removeZerosFromEnd())")
