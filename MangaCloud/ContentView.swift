@@ -28,7 +28,7 @@ struct ContentView: View {
                         Label("Settings", systemImage: "gearshape.fill")
                     }
             }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
     
     struct ContentView_Previews: PreviewProvider {
