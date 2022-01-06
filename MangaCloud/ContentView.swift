@@ -11,9 +11,6 @@ struct ContentView: View {
     let latest = LatestViewModel()
     
     var body: some View {
-        //        NavigationView{
-        //        VStack{
-        //
         NavigationView{
             TabView {
                 Text("Library")
@@ -31,15 +28,7 @@ struct ContentView: View {
                         Label("Settings", systemImage: "gearshape.fill")
                     }
             }
-            //        }
         }
-        .navigationBarTitle("")
-        .navigationBarBackButtonHidden(true)
-        .navigationBarHidden(true)
-        
-        //        }
-        
-        //        ChapterView(viewModel: chapterView)
     }
     
     struct ContentView_Previews: PreviewProvider {
