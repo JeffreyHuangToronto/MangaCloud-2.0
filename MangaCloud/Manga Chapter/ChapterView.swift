@@ -43,28 +43,62 @@ struct ChapterView: View {
                 }
             }
         }
-        
+
         .onTapGesture {
             toggle.toggle()
             print("Toggle \(toggle)")
         }
         .overlay(alignment: .bottom) {
             if (toggle){
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(Color(UIColor.systemGray6))
+                Rectangle()
+                    .fill(ThemeSettings.primaryColor)
                     .edgesIgnoringSafeArea(.bottom)
-                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 13)
+                    .frame(width: UIScreen.main.bounds.width, height: 75)
+                    .opacity(ThemeSettings.menuOpacity)
                     .overlay(alignment: .top) {
                         VStack {
-                            Text("Chapter \(viewModel.getChapterName().removeZerosFromEnd())")
                             HStack {
-                                Button("GO BACK"){
+                                Button
+                                {
+
                                     viewModel.goBack()
+                                } label: {
+                                    Image(systemName: "backward.end")
+                                        .renderingMode(.original)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: ThemeSettings.iconSize, height: ThemeSettings.iconSize)
+                                        .tint(ThemeSettings.buttonColor)
                                 }
-                                Button("GO NEXT"){
+                                
+                                Spacer()
+                                Button
+                                {
+
+                                    viewModel.goBack()
+                                } label: {
+                                    Image(systemName: "backward.end")
+                                        .renderingMode(.original)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: ThemeSettings.iconSize, height: ThemeSettings.iconSize)
+                                        .tint(ThemeSettings.buttonColor)
+                                }
+                                Spacer()
+                                Button
+                                {
                                     viewModel.goNext()
+                                } label: {
+                                    Image(systemName: "forward.end")
+                                        .renderingMode(.original)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: ThemeSettings.iconSize, height: ThemeSettings.iconSize)
+                                        .tint(ThemeSettings.buttonColor)
+                                    
                                 }
                             }
+                            .padding(40)
                         }
                     }
                 
@@ -73,15 +107,83 @@ struct ChapterView: View {
                 EmptyView()
             }
         }
+        
+        // Top Bar
         .overlay(alignment: .topLeading, content: {
             if (toggle){
-                Button("<"){
-                    dismiss()
-                }
-                .containerShape(Rectangle())
-                .frame(width: 30, height: 30, alignment: .topLeading)
-                .padding(15)
-                .font(.largeTitle)
+                
+                Rectangle()
+                    .fill(ThemeSettings.primaryColor)
+                    .frame(width: ThemeSettings.topBarWidth , height: ThemeSettings.topBarHeight)
+                    .opacity(ThemeSettings.menuOpacity)
+                
+                    // Status Bar Color
+                    .overlay(alignment: .top) {
+                        ThemeSettings.primaryColor
+                        .edgesIgnoringSafeArea(.top)
+                        .frame(height: 0)
+                        
+                    }
+                    .overlay(alignment: .center) {
+
+                        HStack {
+                            Button{
+                                dismiss()
+                            } label: {
+                                Image(systemName: "arrow.backward")
+                            }
+                            .containerShape(Rectangle())
+                            .frame(width: ThemeSettings.iconSize, height: ThemeSettings.iconSize)
+                            .padding(15)
+                            .font(.largeTitle)
+                            .tint(ThemeSettings.buttonColor)
+
+                            Spacer()
+                            
+                            VStack(alignment: HorizontalAlignment.leading){
+                                
+                                Text("\(viewModel.getTitle())")
+                                    .foregroundColor(ThemeSettings.textColor)
+                                    .fontWeight(.bold)
+                                Text("Ch. \(viewModel.getChapterName().removeZerosFromEnd())")
+                                    .foregroundColor(ThemeSettings.textColor)
+                                
+                            }
+                            
+
+
+                            Spacer()
+                            Button
+                            {
+
+                                
+                            } label: {
+                                Image(systemName: "slider.horizontal.3")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: ThemeSettings.iconSize, height: ThemeSettings.iconSize)
+                                    .tint(ThemeSettings.buttonColor)
+                                    .padding(10)
+                            }
+                            Button
+                            {
+
+                                
+                            } label: {
+                                Image(systemName: "gear")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: ThemeSettings.iconSize, height: ThemeSettings.iconSize)
+                                    .tint(ThemeSettings.buttonColor)
+                                    .padding(10)
+                            }
+                        }
+                        .padding(15)
+
+
+                    }
+                    
+    
             }
             else {
                 EmptyView()
@@ -97,3 +199,13 @@ struct ChapterView_Previews: PreviewProvider {
     }
 }
 
+private struct ThemeSettings {
+    static let primaryColor: Color = Color(UIColor.systemBackground)
+    static let secoundaryColor: Color = Color(UIColor.systemBackground)
+    static let textColor: Color = Color(UIColor.label)
+    static let buttonColor: Color = Color(UIColor.label)
+    static let iconSize: CGFloat = 20
+    static let menuOpacity: Double = 0.8
+    static let topBarHeight: Double = 100
+    static let topBarWidth: Double = .infinity
+}

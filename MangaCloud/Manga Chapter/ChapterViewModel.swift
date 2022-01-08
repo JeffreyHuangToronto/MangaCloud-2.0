@@ -22,6 +22,10 @@ class ChapterViewModel : ObservableObject {
         model.manga.chapter_names[getChapterIndex()]
     }
     
+    func getTitle() -> String{
+        model.manga.title
+    }
+    
     func goNext(){
         if (model.chapter_index < model.manga.chapter_names.count - 1){
             model.goNext()
