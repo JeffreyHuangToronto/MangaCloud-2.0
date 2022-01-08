@@ -34,31 +34,54 @@ struct MangaView: View {
                         toggle.toggle()
                     }
                 
-                Button(libraryViewModel.isFavorited(_id: viewModel.getId()) ? "Unfavorite": "Favorite") {
-                    libraryViewModel.updateSavedLibrary(viewModel.getId())
+                if (libraryViewModel.isFavorited(_id: viewModel.getId()))
+                {
+                    Button
+                    {
+                        libraryViewModel.updateSavedLibrary(viewModel.getId())
+                    } label: {
+                        Image(systemName: "bookmark.fill")
+                    }
+                } else {
+                    Button
+                    {
+                        libraryViewModel.updateSavedLibrary(viewModel.getId())
+                    } label: {
+                        Image(systemName: "bookmark")
+                    }
                 }
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 75, maximum: 100))]){
-                    ForEach(0..<viewModel.getChapterNames().count){ index in
+                
+
+                
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 75, maximum: 100))])
+                {
+                    ForEach(0..<viewModel.getChapterNames().count)
+                    { index in
                         NavigationLink {
                             ChapterView(manga: viewModel.getManga(), chapter_index: index)
                                 .navigationBarHidden(true)
-                        } label: {
+                        }
+                    label:
+                        {
                             RoundedRectangle(cornerRadius: 15)
-                                .fill(Color.mint)
+                                .fill(ThemeSettings.primaryColor)
                                 .frame(width: 75, height: 50)
                                 .overlay {
                                 Text("\(viewModel.getChapterNames()[index].removeZerosFromEnd())")
-                                        .foregroundColor(Color.white)
-                                        .shadow(color: Color.black, radius: 5, x: 0, y: 0)
+                                        .foregroundColor(ThemeSettings.textColor)
+                                        .shadow(color: ThemeSettings.primaryColor, radius: 5, x: 0, y: 0)
                             }
                             
-                        }.isDetailLink(false)
-                    }
+                        }
+                        .isDetailLink(false)
                 }
             }
+    }
+        
         }
     }
 }
+
 
 struct MangaInfoView_Previews: PreviewProvider {
     
@@ -67,4 +90,19 @@ struct MangaInfoView_Previews: PreviewProvider {
         let viewModel = MangaViewModel(manga: manga)
         MangaView(viewModel: viewModel)
     }
+}
+
+
+
+private struct ThemeSettings {
+    static let primaryColor: Color = Color(UIColor.systemGray6)
+    static let secoundaryColor: Color = Color(UIColor.systemBackground)
+    static let textColor: Color = Color(UIColor.label)
+    static let buttonColor: Color = Color(UIColor.label)
+    static let accentColor: Color = Color(UIColor.systemIndigo)
+    static let iconSize: CGFloat = 20
+    static let largeIconSize: CGFloat = 30
+    static let menuOpacity: Double = 0.8
+    static let topBarHeight: Double = 100
+    static let topBarWidth: Double = .infinity
 }

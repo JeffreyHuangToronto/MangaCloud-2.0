@@ -44,16 +44,21 @@ struct ChapterView: View {
         }
 
         .onTapGesture {
-            toggle.toggle()
-            print("Toggle \(toggle)")
+            withAnimation {
+                toggle.toggle()
+                print("Toggle \(toggle)")
+            }
         }
         .overlay(alignment: .bottom) {
             if (toggle){
+                
                 Rectangle()
                     .fill(ThemeSettings.primaryColor)
                     .edgesIgnoringSafeArea(.bottom)
-                    .frame(width: UIScreen.main.bounds.width, height: 75)
+                    .frame(height: ThemeSettings.bottomBarHeight)
                     .opacity(ThemeSettings.menuOpacity)
+                
+                    .transition(.move(edge: .bottom))
                     .overlay(alignment: .top) {
                         VStack {
                             HStack {
@@ -68,7 +73,10 @@ struct ChapterView: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: ThemeSettings.iconSize, height: ThemeSettings.iconSize)
                                         .tint(ThemeSettings.buttonColor)
+                                    
+
                                 }
+                                
                                 
                                 Spacer()
                                 Button
@@ -76,11 +84,11 @@ struct ChapterView: View {
 
                                     viewModel.goBack()
                                 } label: {
-                                    Image(systemName: "backward.end")
-                                        .renderingMode(.original)
+                                    Image(systemName: "text.justify")
+//                                        .renderingMode(.original)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: ThemeSettings.iconSize, height: ThemeSettings.iconSize)
+                                        .frame(width: ThemeSettings.largeIconSize, height: ThemeSettings.largeIconSize)
                                         .tint(ThemeSettings.buttonColor)
                                 }
                                 Spacer()
@@ -113,9 +121,9 @@ struct ChapterView: View {
                 
                 Rectangle()
                     .fill(ThemeSettings.primaryColor)
-                    .frame(width: ThemeSettings.topBarWidth , height: ThemeSettings.topBarHeight)
+                    .frame(height: ThemeSettings.topBarHeight)
                     .opacity(ThemeSettings.menuOpacity)
-                
+                    .transition(.move(edge: .top))
                     // Status Bar Color
                     .overlay(alignment: .top) {
                         ThemeSettings.primaryColor
@@ -164,18 +172,7 @@ struct ChapterView: View {
                                     .tint(ThemeSettings.buttonColor)
                                     .padding(10)
                             }
-                            Button
-                            {
-
-                                
-                            } label: {
-                                Image(systemName: "gear")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: ThemeSettings.iconSize, height: ThemeSettings.iconSize)
-                                    .tint(ThemeSettings.buttonColor)
-                                    .padding(10)
-                            }
+                            iconButton()
                         }
                         .padding(15)
 
@@ -198,13 +195,33 @@ struct ChapterView_Previews: PreviewProvider {
     }
 }
 
+struct iconButton: View {
+    var body: some View {
+        Button
+        {
+            
+        } label: {
+            Image(systemName: "bookmark")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: ThemeSettings.iconSize, height: ThemeSettings.iconSize)
+                .tint(ThemeSettings.buttonColor)
+                .padding(10)
+        }
+    }
+}
+
 private struct ThemeSettings {
     static let primaryColor: Color = Color(UIColor.systemBackground)
     static let secoundaryColor: Color = Color(UIColor.systemBackground)
     static let textColor: Color = Color(UIColor.label)
     static let buttonColor: Color = Color(UIColor.label)
     static let iconSize: CGFloat = 20
+    static let largeIconSize: CGFloat = 30
     static let menuOpacity: Double = 0.8
     static let topBarHeight: Double = 100
     static let topBarWidth: Double = .infinity
+    static let bottomBarHeight: Double = 75
 }
+
+
