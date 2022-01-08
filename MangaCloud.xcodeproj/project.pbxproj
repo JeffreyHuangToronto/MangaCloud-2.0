@@ -25,6 +25,8 @@
 		1BBBB3B8278752DF00344892 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBBB3B7278752DF00344892 /* LibraryView.swift */; };
 		1BBBB3BC27877A2300344892 /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBBB3BB27877A2300344892 /* LibraryViewModel.swift */; };
 		1BBBB3BE27877A4700344892 /* LibraryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBBB3BD27877A4700344892 /* LibraryModel.swift */; };
+		1BBBB3C62789F80F00344892 /* LibraryContainer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1BBBB3C42789F80F00344892 /* LibraryContainer.xcdatamodeld */; };
+		1BBBB3C82789F85D00344892 /* LibraryDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBBB3C72789F85D00344892 /* LibraryDataService.swift */; };
 		1BEB30992776966300359B83 /* ChapterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BEB30982776966300359B83 /* ChapterModel.swift */; };
 		1BEB309B277696B500359B83 /* ChapterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BEB309A277696B500359B83 /* ChapterViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -68,6 +70,8 @@
 		1BBBB3B7278752DF00344892 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		1BBBB3BB27877A2300344892 /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
 		1BBBB3BD27877A4700344892 /* LibraryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryModel.swift; sourceTree = "<group>"; };
+		1BBBB3C52789F80F00344892 /* LibraryContainer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LibraryContainer.xcdatamodel; sourceTree = "<group>"; };
+		1BBBB3C72789F85D00344892 /* LibraryDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryDataService.swift; sourceTree = "<group>"; };
 		1BEB30982776966300359B83 /* ChapterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterModel.swift; sourceTree = "<group>"; };
 		1BEB309A277696B500359B83 /* ChapterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChapterViewModel.swift; path = "MangaCloud/Manga Chapter/ChapterViewModel.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -158,6 +162,8 @@
 		1B7E493E2749B38A0045182F /* MangaCloud */ = {
 			isa = PBXGroup;
 			children = (
+				1BBBB3CA2789FC9D00344892 /* Services */,
+				1BBBB3C92789FC9500344892 /* Models */,
 				1BBBB3B6278752B900344892 /* User Library */,
 				1B3D9E9F2781767400368D71 /* Latest Manga */,
 				1B2D436D2780EE5C00482C04 /* Manga Chapter */,
@@ -204,6 +210,22 @@
 				1BBBB3BD27877A4700344892 /* LibraryModel.swift */,
 			);
 			path = "User Library";
+			sourceTree = "<group>";
+		};
+		1BBBB3C92789FC9500344892 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1BBBB3C42789F80F00344892 /* LibraryContainer.xcdatamodeld */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1BBBB3CA2789FC9D00344892 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1BBBB3C72789F85D00344892 /* LibraryDataService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -340,6 +362,7 @@
 				1BEB309B277696B500359B83 /* ChapterViewModel.swift in Sources */,
 				1B2D4362277D73DD00482C04 /* LatestViewModel.swift in Sources */,
 				1B2D4360277AA97F00482C04 /* LatestView.swift in Sources */,
+				1BBBB3C82789F85D00344892 /* LibraryDataService.swift in Sources */,
 				1B2D436A2780EE3800482C04 /* MangaViewModel.swift in Sources */,
 				1B7E49422749B38A0045182F /* ContentView.swift in Sources */,
 				1BBBB3B8278752DF00344892 /* LibraryView.swift in Sources */,
@@ -349,6 +372,7 @@
 				1BBBB3BE27877A4700344892 /* LibraryModel.swift in Sources */,
 				1B2D436F2780EF6400482C04 /* MangaView.swift in Sources */,
 				1B2D435E277A9FA100482C04 /* ChapterView.swift in Sources */,
+				1BBBB3C62789F80F00344892 /* LibraryContainer.xcdatamodeld in Sources */,
 				1B3D9E9E278172FE00368D71 /* LatestModel.swift in Sources */,
 				1B2D436C2780EE5200482C04 /* MangaModel.swift in Sources */,
 			);
@@ -697,6 +721,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1BBBB3C42789F80F00344892 /* LibraryContainer.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1BBBB3C52789F80F00344892 /* LibraryContainer.xcdatamodel */,
+			);
+			currentVersion = 1BBBB3C52789F80F00344892 /* LibraryContainer.xcdatamodel */;
+			path = LibraryContainer.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1B7E49342749B38A0045182F /* Project object */;
 }

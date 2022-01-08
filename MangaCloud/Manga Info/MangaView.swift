@@ -35,7 +35,7 @@ struct MangaView: View {
                     }
                 
                 Button(libraryViewModel.isFavorited(_id: viewModel.getId()) ? "Unfavorite": "Favorite") {
-                    libraryViewModel.isFavorited(_id: viewModel.getId()) ? libraryViewModel.unfavorite(_id: viewModel.getId()) : libraryViewModel.favorite(_id: viewModel.getId())
+                    libraryViewModel.updateSavedLibrary(viewModel.getId())
                 }
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 75, maximum: 100))]){
                     ForEach(0..<viewModel.getChapterNames().count){ index in

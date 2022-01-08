@@ -6,12 +6,30 @@
 //
 
 import SwiftUI
+import Combine
 
 class LibraryViewModel : ObservableObject {
     @Published private var model: LibraryModel
     
+    @Published private var savedMangaIds: [String] = []
+    
+    private let libraryDataService = LibraryDataService()
+    private var cancellables = Set<AnyCancellable>()
+    
+    
+//    func addSubscribers(){
+//        // Library Data Service
+//        savedMangaIds = libraryDataService.savedEntities.map { $0.mangaId!}
+//    }
+        
+    func updateSavedLibrary(_ mangaId: String) {
+        libraryDataService.addToLibrary(mangaId)
+        savedMangaIds = libraryDataService.savedEntities.map { $0.mangaId!}
+        updateLibrary()
+    }
+    
     func getLibraryMangaIds() -> Array<String> {
-        model.userMangaIdsList
+        return savedMangaIds
     }
     
     func getLibrary() -> Array<MangaItem>{
@@ -19,20 +37,11 @@ class LibraryViewModel : ObservableObject {
     }
     
     func isFavorited(_id: String) -> Bool {
-        model.hasMangaId(_id)
-    }
-    
-    func favorite(_id: String){
-        model.addMangaId(_id: _id)
-        updateLibrary()
-    }
-    
-    func unfavorite(_id: String){
-        model.removeMangaId(_id: _id)
-        updateLibrary()
+        return savedMangaIds.firstIndex(of: _id) != nil
     }
     
     func updateLibrary(){
+        savedMangaIds = libraryDataService.savedEntities.map { $0.mangaId!}
         Api().getLibraryMangaList(mangaIdList: getLibraryMangaIds(), completion: { userLibrary in
             self.model.updateLibrary(library: userLibrary)
         })
@@ -40,6 +49,7 @@ class LibraryViewModel : ObservableObject {
     
     init(){
         model = LibraryModel()
+//        addSubscribers()
         updateLibrary()
     }
 }
