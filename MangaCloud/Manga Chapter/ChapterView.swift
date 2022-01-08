@@ -29,7 +29,6 @@ struct ChapterView: View {
                     Text("Loading Chapter\n Please Wait")
                 }
                 else{
-                    
                     ForEach(urls, id: \.self){ i in
                         AsyncImage(url: URL(string: i))
                         { image in

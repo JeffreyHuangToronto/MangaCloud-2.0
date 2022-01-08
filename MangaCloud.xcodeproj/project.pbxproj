@@ -25,7 +25,6 @@
 		1BBBB3B8278752DF00344892 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBBB3B7278752DF00344892 /* LibraryView.swift */; };
 		1BBBB3BC27877A2300344892 /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBBB3BB27877A2300344892 /* LibraryViewModel.swift */; };
 		1BBBB3BE27877A4700344892 /* LibraryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBBB3BD27877A4700344892 /* LibraryModel.swift */; };
-		1BBBB3C02788F67800344892 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BBBB3BF2788F67800344892 /* User.swift */; };
 		1BEB30992776966300359B83 /* ChapterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BEB30982776966300359B83 /* ChapterModel.swift */; };
 		1BEB309B277696B500359B83 /* ChapterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BEB309A277696B500359B83 /* ChapterViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -69,7 +68,6 @@
 		1BBBB3B7278752DF00344892 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		1BBBB3BB27877A2300344892 /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
 		1BBBB3BD27877A4700344892 /* LibraryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryModel.swift; sourceTree = "<group>"; };
-		1BBBB3BF2788F67800344892 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		1BEB30982776966300359B83 /* ChapterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterModel.swift; sourceTree = "<group>"; };
 		1BEB309A277696B500359B83 /* ChapterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChapterViewModel.swift; path = "MangaCloud/Manga Chapter/ChapterViewModel.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -204,7 +202,6 @@
 				1BBBB3B7278752DF00344892 /* LibraryView.swift */,
 				1BBBB3BB27877A2300344892 /* LibraryViewModel.swift */,
 				1BBBB3BD27877A4700344892 /* LibraryModel.swift */,
-				1BBBB3BF2788F67800344892 /* User.swift */,
 			);
 			path = "User Library";
 			sourceTree = "<group>";
@@ -343,7 +340,6 @@
 				1BEB309B277696B500359B83 /* ChapterViewModel.swift in Sources */,
 				1B2D4362277D73DD00482C04 /* LatestViewModel.swift in Sources */,
 				1B2D4360277AA97F00482C04 /* LatestView.swift in Sources */,
-				1BBBB3C02788F67800344892 /* User.swift in Sources */,
 				1B2D436A2780EE3800482C04 /* MangaViewModel.swift in Sources */,
 				1B7E49422749B38A0045182F /* ContentView.swift in Sources */,
 				1BBBB3B8278752DF00344892 /* LibraryView.swift in Sources */,
@@ -515,7 +511,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MangaCloud/Preview Content\"";
-				DEVELOPMENT_TEAM = R6TTKT49WT;
+				DEVELOPMENT_TEAM = Z99V2Z2WVU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -528,7 +524,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = tech.richardhuang.MangaCloud;
+				PRODUCT_BUNDLE_IDENTIFIER = tech.jeffreyhuang.MangaCloud;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -544,7 +540,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MangaCloud/Preview Content\"";
-				DEVELOPMENT_TEAM = R6TTKT49WT;
+				DEVELOPMENT_TEAM = Z99V2Z2WVU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -557,7 +553,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = tech.richardhuang.MangaCloud;
+				PRODUCT_BUNDLE_IDENTIFIER = tech.jeffreyhuang.MangaCloud;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

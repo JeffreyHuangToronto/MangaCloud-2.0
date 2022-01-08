@@ -32,19 +32,26 @@ struct MangaView: View {
                     .padding(10)
                     .onTapGesture {
                         toggle.toggle()
-                }
+                    }
                 
                 Button(libraryViewModel.isFavorited(_id: viewModel.getId()) ? "Unfavorite": "Favorite") {
                     libraryViewModel.isFavorited(_id: viewModel.getId()) ? libraryViewModel.unfavorite(_id: viewModel.getId()) : libraryViewModel.favorite(_id: viewModel.getId())
                 }
-                
-                ForEach(0..<viewModel.getChapterNames().count){ index in
-                    LazyVGrid(columns: [GridItem(), GridItem()]){
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 75, maximum: 100))]){
+                    ForEach(0..<viewModel.getChapterNames().count){ index in
                         NavigationLink {
                             ChapterView(manga: viewModel.getManga(), chapter_index: index)
                                 .navigationBarHidden(true)
                         } label: {
-                            Text("Test Chapter \(viewModel.getChapterNames()[index].removeZerosFromEnd())")
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(Color.mint)
+                                .frame(width: 75, height: 50)
+                                .overlay {
+                                Text("\(viewModel.getChapterNames()[index].removeZerosFromEnd())")
+                                        .foregroundColor(Color.white)
+                                        .shadow(color: Color.black, radius: 5, x: 0, y: 0)
+                            }
+                            
                         }.isDetailLink(false)
                     }
                 }

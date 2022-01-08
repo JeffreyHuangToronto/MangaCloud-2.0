@@ -16,15 +16,8 @@ struct LibraryModel {
     }
     
     mutating func addMangaId(_id: String){
-//        userMangaIdsList.push()
         if (!hasMangaId(_id)){
-            // It's not in the list
-            print("Not in")
             userMangaIdsList.append(_id)
-            print(userMangaIdsList)
-        }
-        else{
-            print("In")
         }
     }
     
