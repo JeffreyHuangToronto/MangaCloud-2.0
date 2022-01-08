@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MangaView: View {
     let viewModel: MangaViewModel
+    @EnvironmentObject var libraryViewModel: LibraryViewModel
     
     @State private var toggle = true
     
@@ -31,6 +32,10 @@ struct MangaView: View {
                     .padding(10)
                     .onTapGesture {
                         toggle.toggle()
+                }
+                
+                Button(libraryViewModel.isFavorited(_id: viewModel.getId()) ? "Unfavorite": "Favorite") {
+                    libraryViewModel.isFavorited(_id: viewModel.getId()) ? libraryViewModel.unfavorite(_id: viewModel.getId()) : libraryViewModel.favorite(_id: viewModel.getId())
                 }
                 
                 ForEach(0..<viewModel.getChapterNames().count){ index in

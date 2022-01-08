@@ -54,15 +54,16 @@ struct MangaItemView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .shadow(color: Color(.label), radius: 5, x: 5, y: 5)
                         .border(.red)
+                    
                     Text(manga.title + "\n")
                         .foregroundColor(Color(.label))
-                        .font(.system(size: 12, weight: .bold, design: .monospaced))
                         .multilineTextAlignment(.leading)
+                        .font(.system(size: 12, weight: .bold, design: .monospaced))
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-//                        .padding(3)
                         .border(.red)
                         .lineLimit(2)
                         
+                    
                 } else if phase.error != nil {
                     Color.red // Indicates an error.
                     ProgressView()

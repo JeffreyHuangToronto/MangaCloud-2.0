@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
     let latest = LatestViewModel()
     
+    @StateObject var userLibraryViewModel = LibraryViewModel()
+    
     var body: some View {
         NavigationView{
             TabView {
@@ -28,7 +30,9 @@ struct ContentView: View {
                         Label("Settings", systemImage: "gearshape.fill")
                     }
             }
-        }.navigationViewStyle(StackNavigationViewStyle())
+        }
+        .environmentObject(userLibraryViewModel)
+        .navigationViewStyle(StackNavigationViewStyle())
         
     }
     
@@ -38,3 +42,10 @@ struct ContentView: View {
         }
     }
 }
+
+//struct userData: ObservableObject {
+//    var mangaIdList: Array<String>
+//    init(){
+//        mangaIdList = []
+//    }
+//}
