@@ -45,7 +45,7 @@ struct MangaView: View {
                                 .navigationBarHidden(true)
                         } label: {
                             Text("Test Chapter \(viewModel.getChapterNames()[index].removeZerosFromEnd())")
-                        }
+                        }.isDetailLink(false)
                     }
                 }
             }

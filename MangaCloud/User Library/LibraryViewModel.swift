@@ -24,13 +24,15 @@ class LibraryViewModel : ObservableObject {
     
     func favorite(_id: String){
         model.addMangaId(_id: _id)
-        Api().getLibraryMangaList(mangaIdList: getLibraryMangaIds(), completion: { userLibrary in
-            self.model.updateLibrary(library: userLibrary)
-        })
+        updateLibrary()
     }
     
     func unfavorite(_id: String){
-        model.remMangaId(_id: _id)
+        model.removeMangaId(_id: _id)
+        updateLibrary()
+    }
+    
+    func updateLibrary(){
         Api().getLibraryMangaList(mangaIdList: getLibraryMangaIds(), completion: { userLibrary in
             self.model.updateLibrary(library: userLibrary)
         })
@@ -38,8 +40,6 @@ class LibraryViewModel : ObservableObject {
     
     init(){
         model = LibraryModel()
-        Api().getLibraryMangaList(mangaIdList: getLibraryMangaIds(), completion: { userLibrary in
-            self.model.updateLibrary(library: userLibrary)
-        })
+        updateLibrary()
     }
 }

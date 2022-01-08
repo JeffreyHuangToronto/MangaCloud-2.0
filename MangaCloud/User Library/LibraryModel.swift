@@ -28,7 +28,7 @@ struct LibraryModel {
         }
     }
     
-    mutating func remMangaId(_id: String){
+    mutating func removeMangaId(_id: String){
         if (hasMangaId(_id)){
             userMangaIdsList.remove(at: userMangaIdsList.firstIndex(of: _id)!) // TODO: Potential Problem
         }

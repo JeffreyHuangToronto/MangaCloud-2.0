@@ -20,7 +20,7 @@ struct LatestView: View {
                         let mangaViewModel = MangaViewModel(manga: manga)
                         NavigationLink(destination: MangaView(viewModel: mangaViewModel)){
                             MangaItemView(manga: manga)
-                        }
+                        }.isDetailLink(false)
                     }
                 }
             }
