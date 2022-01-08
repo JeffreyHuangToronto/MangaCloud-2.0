@@ -38,3 +38,19 @@ struct LibraryView_Previews: PreviewProvider {
         LibraryView()
     }
 }
+
+private struct ThemeSettings {
+    static let primaryColor: Color = Color(UIColor.systemGray6)
+    static let secoundaryColor: Color = Color(UIColor.systemBackground)
+    static let textColor: Color = Color(UIColor.label)
+    static let buttonColor: Color = Color(UIColor.label)
+    static let accentColor: Color = Color(UIColor.systemIndigo)
+    static let iconSize: CGFloat = 20
+    static let largeIconSize: CGFloat = 30
+    static let menuOpacity: Double = 0.8
+    static let topBarHeight: Double = 100
+    static let topBarWidth: Double = .infinity
+    static let normalPadding: Double = 20
+    static let largeTitleColor: Color = .white
+    static let heroHeight: Double = Double(UIScreen.main.bounds.height / 4)
+}

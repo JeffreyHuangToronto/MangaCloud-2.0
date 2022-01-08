@@ -52,16 +52,16 @@ struct MangaItemView: View {
                         .aspectRatio(3/4, contentMode: .fill) // Displays the loaded image.
                         .clipShape(RoundedRectangle(cornerRadius: 5))
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .shadow(color: Color(.label), radius: 5, x: 5, y: 5)
-                        .border(.red)
+//                        .shadow(color: Color(.label), radius: 5, x: 5, y: 5)
+//                        .border(.red)
                     
                     Text(manga.title + "\n")
                         .foregroundColor(Color(.label))
                         .multilineTextAlignment(.leading)
-                        .font(.system(size: 12, weight: .bold, design: .monospaced))
+                        .font(.system(size: 12, weight: .bold, design: .rounded))
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                        .border(.red)
-                        .lineLimit(2)
+//                        .border(.red)
+//                        .lineLimit(2)
                         
                     
                 } else if phase.error != nil {
@@ -71,8 +71,9 @@ struct MangaItemView: View {
                     Color.blue // Acts as a placeholder.
                 }
                 
-            }.padding()
-                .border(Color.red)
+            }
+            .padding(ThemeSettings.normalPadding)
+//                .border(Color.red)
         }
     }
 }
@@ -82,4 +83,20 @@ struct MainView_Previews: PreviewProvider {
         let latestViewModel = LatestViewModel()
         LatestView(viewModel: latestViewModel)
     }
+}
+
+private struct ThemeSettings {
+    static let primaryColor: Color = Color(UIColor.systemGray6)
+    static let secoundaryColor: Color = Color(UIColor.systemBackground)
+    static let textColor: Color = Color(UIColor.label)
+    static let buttonColor: Color = Color(UIColor.label)
+    static let accentColor: Color = Color(UIColor.systemIndigo)
+    static let iconSize: CGFloat = 20
+    static let largeIconSize: CGFloat = 30
+    static let menuOpacity: Double = 0.8
+    static let topBarHeight: Double = 100
+    static let topBarWidth: Double = .infinity
+    static let normalPadding: Double = 20
+    static let largeTitleColor: Color = .white
+    static let heroHeight: Double = Double(UIScreen.main.bounds.height / 4)
 }
