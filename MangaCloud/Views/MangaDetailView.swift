@@ -7,11 +7,20 @@
 
 import SwiftUI
 
-struct MangaView: View {
+struct MangaDetailView: View {
     let viewModel: MangaViewModel
     @EnvironmentObject var libraryViewModel: LibraryViewModel
     
+    @Binding var manga: MangaItem?
+    
     @State private var toggle = true
+    
+    init(manga: Binding<MangaItem?>){
+        self._manga = manga
+//        self.viewModel = MangaViewModel(manga: _manga!)
+        print("Initializing Detail View for: \(manga.wrappedValue?.title)")
+        viewModel = MangaViewModel(manga: MangaItem(_id: manga.wrappedValue?._id ?? "", title: manga.wrappedValue?.title ?? "", summary: manga.wrappedValue?.summary ?? "", cover_url: manga.wrappedValue?.cover_url ?? "", chapter_names: manga.wrappedValue?.chapter_names ?? []))
+    }
     
     var body: some View {
         ScrollView {
@@ -160,7 +169,7 @@ struct MangaInfoView_Previews: PreviewProvider {
     
     static var previews: some View {
         let viewModel = MangaViewModel(manga: dev.manga)
-        MangaView(viewModel: viewModel).environmentObject(dev.userLibraryViewModel)
+        MangaDetailView(manga: .constant(dev.manga)).environmentObject(dev.userLibraryViewModel)
     }
 }
     

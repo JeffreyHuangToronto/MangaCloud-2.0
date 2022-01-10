@@ -10,24 +10,44 @@ import SwiftUI
 struct LibraryView: View {
     @EnvironmentObject var viewModel: LibraryViewModel
     
+    @State private var selectedManga: MangaItem? = nil
+    @State private var showDetailView: Bool = false
+    
     var body: some View {
         let library = viewModel.getLibrary()
         
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
                 ForEach(library, id: \.self) { manga in
-                    let mangaViewModel = MangaViewModel(manga: manga)
-                    NavigationLink(destination: MangaView(viewModel: mangaViewModel)){
-                        MangaItemView(manga: manga)
+//                    let mangaViewModel = MangaViewModel(manga: manga)
+//                    NavigationLink(destination: MangaDetailView(viewModel: mangaViewModel)){
+//                        MangaItemView(manga: manga)
+//                    }
+                    MangaItemView(manga: manga).onTapGesture {
+                        segue(manga: manga)
                     }
                 }
             }
-        }.refreshable {
+        }.background(content: {
+            NavigationLink(isActive: $showDetailView) {
+//                    let mangaViewModel = MangaViewModel(manga: selectedManga)
+                MangaDetailView(manga: $selectedManga)
+            } label: {
+                EmptyView()
+            }
+
+        })
+        .refreshable {
             print("Refresh")
         }
         .navigationBarTitle("")
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
+    }
+    
+    private func segue(manga: MangaItem){
+        selectedManga = manga
+        showDetailView.toggle()
     }
 }
 

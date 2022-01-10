@@ -10,6 +10,9 @@ import SwiftUI
 struct LatestView: View {
     @ObservedObject var viewModel: LatestViewModel
     
+    @State private var selectedManga: MangaItem? = nil
+    @State private var showDetailView: Bool = false
+    
     var body: some View {
         let latest = viewModel.getLatestManga().latest
         
@@ -17,21 +20,39 @@ struct LatestView: View {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
                     ForEach(latest, id: \.self) { manga in
-                        let mangaViewModel = MangaViewModel(manga: manga)
-                        NavigationLink(destination: MangaView(viewModel: mangaViewModel)){
-                            MangaItemView(manga: manga)
-                        }.isDetailLink(false)
+//                        let mangaViewModel = MangaViewModel(manga: manga)
+//                        NavigationLink(destination: MangaDetailView(v)){
+//                            MangaItemView(manga: manga)
+                        MangaItemView(manga: manga)
+                            .onTapGesture {
+                                segue(manga: manga)
+                            }
+//                        }
                     }
                 }
             }
+            
             .navigationViewStyle(StackNavigationViewStyle())
             .navigationBarTitle("")
             .navigationBarBackButtonHidden(true)
             .navigationBarHidden(true)
+            .background(content: {
+                NavigationLink(isActive: $showDetailView) {
+                    MangaDetailView(manga: $selectedManga)
+                } label: {
+                    EmptyView()
+                }
+
+            })
         }
         else{
             Text("Loading Manga")
         }
+    }
+    
+    private func segue(manga: MangaItem){
+        selectedManga = manga
+        showDetailView.toggle()
     }
 }
 

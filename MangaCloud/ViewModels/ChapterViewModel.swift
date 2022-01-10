@@ -9,9 +9,12 @@ import SwiftUI
 
 class ChapterViewModel : ObservableObject {
     @Published private var model: ChapterModel
+    private(set) var manga: MangaItem
+    
+    private(set) var loaded: Bool = false
     
     func isLoaded() -> Bool {
-        model.isChapterLoaded()
+        loaded
     }
     
     func getChapterUrls() -> Array<String> {
@@ -19,24 +22,26 @@ class ChapterViewModel : ObservableObject {
     }
     
     func getChapterName() -> Double{
-        model.manga.chapter_names[getChapterIndex()]
+        manga.chapter_names[getChapterIndex()]
     }
     
     func getTitle() -> String{
-        model.manga.title
+        manga.title
     }
     
     func goNext(){
-        if (model.chapter_index < model.manga.chapter_names.count - 1){
-            model.goNext()
-            updateChapterUrls(manga: model.manga, chapter_index: model.chapter_index)
+        let inBounds = model.chapter_index < manga.chapter_names.count - 1
+        if (inBounds){
+            model.setChapterIndex(model.chapter_index + 1)
+            updateChapterUrls(manga: manga, chapter_index: model.chapter_index)
         }
     }
     
     func goBack(){
-        if (model.chapter_index > 0){
-            model.goBack()
-            updateChapterUrls(manga: model.manga, chapter_index: model.chapter_index)
+        let inBounds = model.chapter_index > 0
+        if (inBounds){
+            model.setChapterIndex(model.chapter_index - 1)
+            updateChapterUrls(manga: manga, chapter_index: model.chapter_index)
         }
     }
     
@@ -45,24 +50,26 @@ class ChapterViewModel : ObservableObject {
     }
     
     func updateChapterUrls(){
-        let dynamic_id = model.manga.cover_url.split(separator: "/")[3].split(separator: ".")[0]
+        let dynamic_id = manga.cover_url.split(separator: "/")[3].split(separator: ".")[0]
         print(dynamic_id)
-        Api().getMangaChapter(manga_id: model.manga._id, chapter_name: model.manga.chapter_names[model.chapter_index]) { manga in
+        Api().getMangaChapter(manga_id: manga._id, chapter_name: manga.chapter_names[model.chapter_index]) { manga in
             self.model.updateChapterImages(manga.manga_page_urls)
-            self.model.loaded()
+            self.loaded = true
         }
     }
     
     func updateChapterUrls(manga: MangaItem, chapter_index: Int) -> () {
-        let dynamic_id = model.manga.cover_url.split(separator: "/")[3].split(separator: ".")[0]
+        let dynamic_id = manga.cover_url.split(separator: "/")[3].split(separator: ".")[0]
 //        print(dynamic_id)
-        Api().getMangaChapter(manga_id: String(dynamic_id), chapter_name: model.manga.chapter_names[chapter_index]) { manga in
+        Api().getMangaChapter(manga_id: String(dynamic_id), chapter_name: manga.chapter_names[chapter_index]) { manga in
             self.model.updateChapterImages(manga.manga_page_urls)
+            self.loaded = true
         }
     }
     
     init(manga: MangaItem, chapter_index: Int){
-        model = ChapterModel(mangaItem: manga, chapterIndex: chapter_index)
+        model = ChapterModel(chapterIndex: chapter_index)
+        self.manga = manga
         updateChapterUrls(manga: manga, chapter_index: chapter_index)
     }
 }

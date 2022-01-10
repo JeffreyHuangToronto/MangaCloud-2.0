@@ -17,4 +17,9 @@ struct LatestModel {
     init(){
         latestManga = LatestMangaList(latest: Array<MangaItem>())
     }
+    
+}
+
+struct LatestMangaList: Codable{
+    var latest: Array<MangaItem>
 }

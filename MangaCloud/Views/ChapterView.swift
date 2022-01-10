@@ -15,10 +15,7 @@ struct ChapterView: View {
     
     init(manga: MangaItem, chapter_index: Int){
         viewModel = ChapterViewModel(manga: manga, chapter_index: chapter_index)
-    }
-    
-    func viewDidLoad(){
-//        self.tabBarController?.tabBar.isHidden = true.
+        print("Initializing Chapter for: \(manga.title) \(chapter_index)")
     }
     
     var body: some View {
@@ -42,7 +39,6 @@ struct ChapterView: View {
                 }
             }
         }
-
         .onTapGesture {
             withAnimation {
                 toggle.toggle()
@@ -51,7 +47,6 @@ struct ChapterView: View {
         }
         .overlay(alignment: .bottom) {
             if (toggle){
-                
                 Rectangle()
                     .fill(ThemeSettings.primaryColor)
                     .edgesIgnoringSafeArea(.bottom)

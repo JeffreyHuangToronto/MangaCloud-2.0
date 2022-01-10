@@ -9,49 +9,27 @@ import Foundation
 import SwiftUI
 
 struct ChapterModel{
+//    private(set) var manga: MangaItem
     private(set) var chapterImages: Array<String>
-    private(set) var manga: MangaItem
     private(set) var chapter_index: Int
-    private(set) var isLoaded = false
     
     mutating func updateChapterImages(_ pages: Array<String>){
         chapterImages = pages
-        isLoaded = true
     }
     
-    func isChapterLoaded() -> Bool {
-        isLoaded
+    mutating func setChapterIndex(_ index: Int) {
+        chapter_index = index
     }
     
-    mutating func goNext(){
-        isLoaded = false
-        chapter_index += 1
-    }
-    
-    mutating func goBack(){
-        isLoaded = false
-        chapter_index -= 1
-    }
-    
-    mutating func loaded(){
-        isLoaded = true
-    }
-    
-    init(mangaItem: MangaItem, chapterIndex: Int){
+    init(chapterIndex: Int){
         chapterImages = []
-        manga = mangaItem
         chapter_index = chapterIndex
-        isLoaded = false
     }
 }
 
 
 struct MangaChapter: Codable{
     var manga_page_urls: Array<String>
-}
-
-struct LatestMangaList: Codable{
-    var latest: Array<MangaItem>
 }
 
 extension Double {
