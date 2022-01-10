@@ -159,9 +159,8 @@ struct MangaView: View {
 struct MangaInfoView_Previews: PreviewProvider {
     
     static var previews: some View {
-        let manga = MangaItem(_id: "", title: "Title", summary: "Summary", cover_url: "", chapter_names: [])
-        let viewModel = MangaViewModel(manga: manga)
-        MangaView(viewModel: viewModel)
+        let viewModel = MangaViewModel(manga: dev.manga)
+        MangaView(viewModel: viewModel).environmentObject(dev.userLibraryViewModel)
     }
 }
     

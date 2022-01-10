@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MainContentView: View {
     let latest = LatestViewModel()
     
     @StateObject var userLibraryViewModel = LibraryViewModel()
@@ -38,15 +38,8 @@ struct ContentView: View {
     
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
-            ContentView()
-.previewInterfaceOrientation(.portrait)
+            MainContentView()
+                .previewInterfaceOrientation(.portrait)
         }
     }
 }
-
-//struct userData: ObservableObject {
-//    var mangaIdList: Array<String>
-//    init(){
-//        mangaIdList = []
-//    }
-//}

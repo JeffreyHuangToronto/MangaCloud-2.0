@@ -14,17 +14,10 @@ class LibraryViewModel : ObservableObject {
     @Published private var savedMangaIds: [String] = []
     
     private let libraryDataService = LibraryDataService()
-    private var cancellables = Set<AnyCancellable>()
     
-    
-//    func addSubscribers(){
-//        // Library Data Service
-//        savedMangaIds = libraryDataService.savedEntities.map { $0.mangaId!}
-//    }
-        
     func updateSavedLibrary(_ mangaId: String) {
         libraryDataService.addToLibrary(mangaId)
-        savedMangaIds = libraryDataService.savedEntities.map { $0.mangaId!}
+        savedMangaIds = libraryDataService.savedEntities.map { $0.mangaId! }
         updateLibrary()
     }
     
@@ -49,7 +42,12 @@ class LibraryViewModel : ObservableObject {
     
     init(){
         model = LibraryModel()
-//        addSubscribers()
+        updateLibrary()
+    }
+    
+    init(savedManga: [String]){
+        model = LibraryModel()
+        savedMangaIds = savedManga
         updateLibrary()
     }
 }

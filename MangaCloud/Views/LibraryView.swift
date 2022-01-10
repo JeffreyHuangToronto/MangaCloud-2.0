@@ -35,7 +35,7 @@ struct LibraryView_Previews: PreviewProvider {
     
     
     static var previews: some View {
-        LibraryView()
+        LibraryView().environmentObject(dev.userLibraryViewModel)
     }
 }
 
