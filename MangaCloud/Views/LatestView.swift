@@ -67,32 +67,27 @@ struct MangaItemView: View {
     var body: some View {
         
         AsyncImage(url: URL(string: manga.cover_url)) { phase in
-            VStack(alignment: .leading){
+            VStack(alignment: .center){
                 if let image = phase.image {
                     image
                         .resizable()
                         .aspectRatio(3/4, contentMode: .fill) // Displays the loaded image.
                         .clipShape(RoundedRectangle(cornerRadius: 5))
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    //                        .shadow(color: Color(.label), radius: 5, x: 5, y: 5)
-                    //                        .border(.red)
-                    
-                    Text(manga.title + "\n")
-                        .foregroundColor(Color(.label))
-                        .multilineTextAlignment(.leading)
-                        .font(.system(size: 12, weight: .bold, design: .rounded))
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                    //                        .border(.red)
-                    //                        .lineLimit(2)
-                    
-                    
                 } else if phase.error != nil {
-                    Color.red // Indicates an error.
                     ProgressView()
+                        .frame(width: 150, height: 200)
+                        .border(Color.white)
+                        .background(Color("ImageBackgroundPlaceholder"))
                 } else {
-                    Color.blue // Acts as a placeholder.
+                    EmptyView()
                 }
                 
+                Text(manga.title + "\n")
+                    .foregroundColor(Color(.label))
+                    .multilineTextAlignment(.leading)
+                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
             }
             .padding(ThemeSettings.normalPadding)
             //                .border(Color.red)

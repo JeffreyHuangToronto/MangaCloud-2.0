@@ -28,7 +28,7 @@ struct MainContentView: View {
                     case .settings:
                         Text("Settings")
                     }
-                    
+                    Spacer()
                     // Tab bar items
                     HStack {
                         TabBarIcon(viewRouter: viewRouter, assignedPage: .library, width: geometry.size.width/5, height: geometry.size.height/28, systemIconName: "bookmark.circle.fill", tabName: "Library")
