@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct MangaCloudApp: App {
+    
+    @StateObject var viewRouter = ViewRouter()
+    
     var body: some Scene {
         WindowGroup {
-            MainContentView()
+            MainContentView(viewRouter: viewRouter)
         }
     }
 }

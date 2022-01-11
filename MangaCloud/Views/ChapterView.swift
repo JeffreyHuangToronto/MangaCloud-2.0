@@ -11,10 +11,14 @@ struct ChapterView: View {
     @ObservedObject var viewModel: ChapterViewModel
     @Environment(\.dismiss) var dismiss
     
+//    var chapter_index: Int
+    
+    
     @State var toggle = false
     
     init(manga: MangaItem, chapter_index: Int){
         viewModel = ChapterViewModel(manga: manga, chapter_index: chapter_index)
+        
         print("Initializing Chapter for: \(manga.title) \(chapter_index)")
     }
     
@@ -39,6 +43,9 @@ struct ChapterView: View {
                 }
             }
         }
+        .navigationTitle("")
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
         .onTapGesture {
             withAnimation {
                 toggle.toggle()

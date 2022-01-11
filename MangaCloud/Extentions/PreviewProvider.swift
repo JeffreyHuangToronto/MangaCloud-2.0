@@ -21,7 +21,7 @@ class DeveloperPreview {
     
     let savedIds = ["fc918572"]
     
-    @StateObject var userLibraryViewModel = LibraryViewModel()
+    @StateObject var userLibraryViewModel = LibraryViewModel(savedManga: ["fc918572"])
     
     private init () {}
     

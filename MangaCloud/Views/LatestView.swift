@@ -13,6 +13,11 @@ struct LatestView: View {
     @State private var selectedManga: MangaItem? = nil
     @State private var showDetailView: Bool = false
     
+    init(viewModel: LatestViewModel){
+        self.viewModel = viewModel
+        print("Init: Creating LatestView")
+    }
+    
     var body: some View {
         let latest = viewModel.getLatestManga().latest
         
@@ -20,14 +25,10 @@ struct LatestView: View {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
                     ForEach(latest, id: \.self) { manga in
-//                        let mangaViewModel = MangaViewModel(manga: manga)
-//                        NavigationLink(destination: MangaDetailView(v)){
-//                            MangaItemView(manga: manga)
                         MangaItemView(manga: manga)
                             .onTapGesture {
                                 segue(manga: manga)
                             }
-//                        }
                     }
                 }
             }
@@ -42,7 +43,7 @@ struct LatestView: View {
                 } label: {
                     EmptyView()
                 }
-
+                
             })
         }
         else{
@@ -73,17 +74,17 @@ struct MangaItemView: View {
                         .aspectRatio(3/4, contentMode: .fill) // Displays the loaded image.
                         .clipShape(RoundedRectangle(cornerRadius: 5))
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                        .shadow(color: Color(.label), radius: 5, x: 5, y: 5)
-//                        .border(.red)
+                    //                        .shadow(color: Color(.label), radius: 5, x: 5, y: 5)
+                    //                        .border(.red)
                     
                     Text(manga.title + "\n")
                         .foregroundColor(Color(.label))
                         .multilineTextAlignment(.leading)
                         .font(.system(size: 12, weight: .bold, design: .rounded))
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-//                        .border(.red)
-//                        .lineLimit(2)
-                        
+                    //                        .border(.red)
+                    //                        .lineLimit(2)
+                    
                     
                 } else if phase.error != nil {
                     Color.red // Indicates an error.
@@ -94,7 +95,7 @@ struct MangaItemView: View {
                 
             }
             .padding(ThemeSettings.normalPadding)
-//                .border(Color.red)
+            //                .border(Color.red)
         }
     }
 }

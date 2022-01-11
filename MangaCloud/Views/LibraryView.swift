@@ -19,30 +19,21 @@ struct LibraryView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
                 ForEach(library, id: \.self) { manga in
-//                    let mangaViewModel = MangaViewModel(manga: manga)
-//                    NavigationLink(destination: MangaDetailView(viewModel: mangaViewModel)){
-//                        MangaItemView(manga: manga)
-//                    }
                     MangaItemView(manga: manga).onTapGesture {
                         segue(manga: manga)
                     }
                 }
             }
-        }.background(content: {
+        }
+        .background(content: {
             NavigationLink(isActive: $showDetailView) {
-//                    let mangaViewModel = MangaViewModel(manga: selectedManga)
                 MangaDetailView(manga: $selectedManga)
             } label: {
                 EmptyView()
             }
-
         })
-        .refreshable {
-            print("Refresh")
-        }
-        .navigationBarTitle("")
-        .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
+            
     }
     
     private func segue(manga: MangaItem){

@@ -20,6 +20,7 @@ class LatestViewModel : ObservableObject {
     
     init(){
         model = LatestModel()
+        print("Init: Getting Latest Manga")
         Api().getLatestChapters { latest in
             self.model.updateLatestManga(latestManga: latest)
         }
