@@ -12,6 +12,7 @@ struct MangaDetailView: View {
     @EnvironmentObject var libraryViewModel: LibraryViewModel
     @Binding var manga: MangaItem?
     
+    
     @State private var selectedChapterIndex: Int = 0
     @State private var showDetailView: Bool = false
     
@@ -58,7 +59,6 @@ struct MangaDetailView: View {
                             AsyncImage(url: URL(string: viewModel.getCoverUrl())) { image in
                                 image
                                     .resizable()
-                                //                                    .frame(idealWidth: 150, maxWidth: 200, idealHeight: 300, maxHeight: 300)
                                     .aspectRatio(3/4, contentMode: .fit)
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 2)
@@ -86,7 +86,7 @@ struct MangaDetailView: View {
                                 }
                                 
                                 Spacer()
-                                HStack
+                                HStack(alignment: VerticalAlignment.top)
                                 {
                                     if (libraryViewModel.isFavorited(_id: viewModel.getId()))
                                     {
@@ -115,6 +115,10 @@ struct MangaDetailView: View {
                                         }
                                     }
                                     Spacer()
+                                    Button(viewModel.getLatestRead() != nil ? "Continue Reading Chapter: \(viewModel.getChapterNames()[viewModel.getLatestRead()!])" : "Start reading"){
+                                        print(viewModel.getLatestRead())
+                                        
+                                    }
                                 }
                                 
                             }
@@ -178,7 +182,7 @@ struct MangaDetailView: View {
 struct MangaInfoView_Previews: PreviewProvider {
     
     static var previews: some View {
-        let viewModel = MangaViewModel(manga: dev.manga)
+//        let viewModel = MangaViewModel(manga: dev.manga)
         MangaDetailView(manga: .constant(dev.manga)).environmentObject(dev.userLibraryViewModel)
     }
 }

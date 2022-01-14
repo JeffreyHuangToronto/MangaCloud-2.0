@@ -12,6 +12,7 @@ struct ChapterView: View {
     @Environment(\.dismiss) var dismiss
     
 //    var chapter_index: Int
+    private let libraryDataService = LibraryDataService()
     
     
     @State var toggle = false
@@ -20,6 +21,7 @@ struct ChapterView: View {
         viewModel = ChapterViewModel(manga: manga, chapter_index: chapter_index)
         
         print("Initializing Chapter for: \(manga.title) \(chapter_index)")
+        
     }
     
     var body: some View {
@@ -66,7 +68,6 @@ struct ChapterView: View {
                             HStack {
                                 Button
                                 {
-
                                     viewModel.goBack()
                                 } label: {
                                     Image(systemName: "backward.end")
@@ -75,19 +76,13 @@ struct ChapterView: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: ThemeSettings.iconSize, height: ThemeSettings.iconSize)
                                         .tint(ThemeSettings.buttonColor)
-                                    
-
                                 }
-                                
-                                
                                 Spacer()
                                 Button
                                 {
-
                                     viewModel.goBack()
                                 } label: {
                                     Image(systemName: "text.justify")
-//                                        .renderingMode(.original)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: ThemeSettings.largeIconSize, height: ThemeSettings.largeIconSize)
@@ -150,15 +145,15 @@ struct ChapterView: View {
                             Spacer()
                             
                             VStack(alignment: HorizontalAlignment.leading){
-                                
+
                                 Text("\(viewModel.getTitle())")
                                     .foregroundColor(ThemeSettings.textColor)
                                     .fontWeight(.bold)
                                 Text("Ch. \(viewModel.getChapterName().removeZerosFromEnd())")
                                     .foregroundColor(ThemeSettings.textColor)
-                                
+
                             }
-                            
+//
 
 
                             Spacer()

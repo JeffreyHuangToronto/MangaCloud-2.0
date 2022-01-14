@@ -10,6 +10,12 @@ import Foundation
 struct MangaModel {
     private(set) var manga: MangaItem
     
+    private(set) var read: Int?
+    
+    mutating func updateRead(_ read: Int?){
+        self.read = read
+    }
+    
     func getTitle() -> String {
         manga.title
     }
@@ -32,7 +38,7 @@ struct MangaModel {
     
     
     
-    init(manga: MangaItem){
+    init(manga: MangaItem){ 
         self.manga = manga
     }
 }
