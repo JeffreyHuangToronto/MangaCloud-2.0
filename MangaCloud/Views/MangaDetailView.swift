@@ -12,8 +12,9 @@ struct MangaDetailView: View {
     @EnvironmentObject var libraryViewModel: LibraryViewModel
     @Binding var manga: MangaItem?
     
+    private let readMangaDataService = ReadMangaDataService.sharedInstance
     
-    @State private var selectedChapterIndex: Int = 0
+    @State private var selectedChapterIndex: Int = -1
     @State private var showDetailView: Bool = false
     
     @State private var toggle = true
@@ -45,7 +46,7 @@ struct MangaDetailView: View {
                     } placeholder: {
                         ProgressView()
                     }
-//                    .edgesIgnoringSafeArea(.top)
+                    //                    .edgesIgnoringSafeArea(.top)
                     .edgesIgnoringSafeArea(Edge.Set.top)
                     
                     
@@ -115,9 +116,13 @@ struct MangaDetailView: View {
                                         }
                                     }
                                     Spacer()
-                                    Button(viewModel.getLatestRead() != nil ? "Continue Reading Chapter: \(viewModel.getChapterNames()[viewModel.getLatestRead()!])" : "Start reading"){
-                                        print(viewModel.getLatestRead())
-                                        
+                                    Button(readMangaDataService.getMangaChapterReadStatus(viewModel.getId()) != nil ? "Continue Reading Chapter: \(viewModel.getChapterNames()[readMangaDataService.getMangaChapterReadStatus(viewModel.getId())!])" : "Start reading"){
+                                        if (readMangaDataService.getMangaChapterReadStatus(viewModel.getId()) != nil){
+                                            segue(manga: viewModel.getManga(), chapterIndex: readMangaDataService.getMangaChapterReadStatus(viewModel.getId())!)
+                                        }
+                                        else {
+                                            segue(manga: viewModel.getManga(), chapterIndex: 0)
+                                        }
                                     }
                                 }
                                 
@@ -164,16 +169,12 @@ struct MangaDetailView: View {
                 EmptyView()
             }
         })
-        //        .overlay(alignment: .topTrailing){
-        //            HStack {
-        //                Spacer()
-        //
-        //            }
-        //        }
     }
     
     private func segue(manga: MangaItem, chapterIndex: Int) {
+        print("segue")
         selectedChapterIndex = chapterIndex
+        readMangaDataService.setMangaChapterReadStatus(viewModel.getId(), chapterIndex)
         showDetailView.toggle()
     }
 }
@@ -182,7 +183,7 @@ struct MangaDetailView: View {
 struct MangaInfoView_Previews: PreviewProvider {
     
     static var previews: some View {
-//        let viewModel = MangaViewModel(manga: dev.manga)
+        //        let viewModel = MangaViewModel(manga: dev.manga)
         MangaDetailView(manga: .constant(dev.manga)).environmentObject(dev.userLibraryViewModel)
     }
 }

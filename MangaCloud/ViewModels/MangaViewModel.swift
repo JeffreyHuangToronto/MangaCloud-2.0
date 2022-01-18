@@ -10,30 +10,28 @@ import SwiftUI
 class MangaViewModel: ObservableObject {
     @Published var model: MangaModel
     
-    @Published var savedChapterReadHistory: [ChapterReadEntity] = []
     
-    private let readMangaDataService = ReadMangaDataService()
+    // TODO: Rename this long var name
+//    private var mangaChapterReadStatusHistory: [ChapterReadEntity] = []
     
-    func getLatestRead() -> Int? {
-//        savedChapterReadHistory = readMangaDataService.savedEntities
-//        readMangaDataService.getReadStatus()
-        savedChapterReadHistory = readMangaDataService.savedEntities
-        print(savedChapterReadHistory)
-        if let entity = savedChapterReadHistory.first(where: {$0.mangaId == model.getId()}){
-            print("Found")
-            model.updateRead(Int(entity.read))
-//            savedChapterReadHistory = readMangaDataService.savedEntities
-            return Int(entity.read)
-        }
-        print("Not Found")
-        return nil
-    }
+//    private let readMangaDataService = ReadMangaDataService.sharedInstance
     
-    func updateLatestRead(_ mangaId: String, _ chapterIndex: Int){
-        readMangaDataService.addToReadHistory(mangaId, chapterIndex)
-        savedChapterReadHistory = readMangaDataService.savedEntities
-        model.updateRead(chapterIndex)
-    }
+//    func getMangaChapterReadStatus(_ mangaId: String) -> Int?{
+//        if let entity = mangaChapterReadStatusHistory.first(where: { $0.mangaId == mangaId }) {
+//            return Int(entity.read)
+//        } else {
+//            return nil
+//        }
+//    }
+//    func setMangaChapterReadStatus(_ mangaId: String, _ chapterIndex: Int){
+//        readMangaDataService.setMangaChapterReadStatus(mangaId, chapterIndex)
+//    }
+    
+    
+    // TODO: Rename this long function
+//    func getMangaChapterReadStatusHistory(){
+//        mangaChapterReadStatusHistory =  readMangaDataService.savedEntities
+//    }
     
     func getTitle() -> String{
         model.getTitle()
@@ -62,8 +60,6 @@ class MangaViewModel: ObservableObject {
     
     init(manga: MangaItem){
         model = MangaModel(manga: manga)
-        savedChapterReadHistory = readMangaDataService.savedEntities
-        readMangaDataService.getReadStatus()
-        print("MangaViewModel Init")
+//        getMangaChapterReadStatusHistory()
     }
 }

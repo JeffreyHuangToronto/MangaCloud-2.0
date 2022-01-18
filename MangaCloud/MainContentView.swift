@@ -26,7 +26,7 @@ struct MainContentView: View {
                     case .latest:
                         LatestView(viewModel: latestViewModel)
                     case .settings:
-                        Text("Settings")
+                        Settings()
                     }
                     Spacer()
                     // Tab bar items

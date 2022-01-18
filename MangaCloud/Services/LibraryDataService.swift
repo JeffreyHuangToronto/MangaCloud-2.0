@@ -15,7 +15,9 @@ class LibraryDataService {
     
     @Published var savedEntities: [LibraryEntity] = []
     
-    init() {
+    static let sharedInstance = LibraryDataService()
+    
+    private init() {
         container = NSPersistentContainer(name: containerName)
         container.loadPersistentStores { _, error in
             if let error = error {
@@ -33,6 +35,22 @@ class LibraryDataService {
             add(mangaId)
         }
         self.getLibrary()
+    }
+    
+    func clearAllLibrary(){
+        // create the delete request for the specified entity
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = LibraryEntity.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+        // get reference to the persistent container
+        let persistentContainer = container
+
+        // perform the delete
+        do {
+            try persistentContainer.viewContext.execute(deleteRequest)
+        } catch let error as NSError {
+            print(error)
+        }
     }
     
     // MARK: PRIVATE

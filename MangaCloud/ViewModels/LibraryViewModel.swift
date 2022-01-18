@@ -13,7 +13,7 @@ class LibraryViewModel : ObservableObject {
     
     private var savedMangaIds: [String] = []
     
-    private let libraryDataService = LibraryDataService()
+    private let libraryDataService = LibraryDataService.sharedInstance
     
     func updateSavedLibrary(_ mangaId: String) {
         libraryDataService.addToLibrary(mangaId)

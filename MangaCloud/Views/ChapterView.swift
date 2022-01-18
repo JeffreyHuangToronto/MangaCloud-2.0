@@ -12,16 +12,15 @@ struct ChapterView: View {
     @Environment(\.dismiss) var dismiss
     
 //    var chapter_index: Int
-    private let libraryDataService = LibraryDataService()
-    
+    private let libraryDataService = LibraryDataService.sharedInstance
+    private let readMangaDataService = ReadMangaDataService.sharedInstance
     
     @State var toggle = false
     
     init(manga: MangaItem, chapter_index: Int){
-        viewModel = ChapterViewModel(manga: manga, chapter_index: chapter_index)
-        
         print("Initializing Chapter for: \(manga.title) \(chapter_index)")
-        
+        viewModel = ChapterViewModel(manga: manga, chapter_index: chapter_index)
+        readMangaDataService.setMangaChapterReadStatus(manga._id, chapter_index)
     }
     
     var body: some View {
@@ -92,6 +91,7 @@ struct ChapterView: View {
                                 Button
                                 {
                                     viewModel.goNext()
+                                    readMangaDataService.setMangaChapterReadStatus(viewModel.manga._id,viewModel.getChapterIndex())
                                 } label: {
                                     Image(systemName: "forward.end")
                                         .renderingMode(.original)
@@ -133,6 +133,7 @@ struct ChapterView: View {
                         HStack {
                             Button{
                                 dismiss()
+                                readMangaDataService.refreshView()
                             } label: {
                                 Image(systemName: "arrow.backward")
                             }
@@ -175,8 +176,6 @@ struct ChapterView: View {
 
 
                     }
-                    
-    
             }
             else {
                 EmptyView()

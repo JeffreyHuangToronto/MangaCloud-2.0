@@ -13,77 +13,82 @@ class ReadMangaDataService {
     let containerName: String  = "ChapterReadContainer"
     let entityName: String = "ChapterReadEntity"
     
+    static let sharedInstance = ReadMangaDataService()
+    
+    
+    
     @Published var savedEntities: [ChapterReadEntity] = []
+    @Published var refreshToggle: Bool = false
     
-    //    var container: NSPersistentContainer
-    ////        let container = NSPersistentContainer(name: "ChapterReadContainer")
-    ////        container.loadPersistentStores { description, error in
-    ////            if let error = error {
-    ////                fatalError("Unable to load persistent stores: \(error)")
-    ////            }
-    ////        }
-    ////        return container
-    //    }()
-    
-    var context: NSManagedObjectContext {
-        return container.viewContext
-    }
-    
-    init() {
+    private init() {
         container = NSPersistentContainer(name: containerName)
         container.loadPersistentStores { _, error in
             if let error = error {
                 print("Error loading Core Data! \(error)")
             }
-            self.getReadStatus()
+            self.getReadHistory()
         }
     }
     // MARK: PUBLIC
     
-    func addToReadHistory(_ mangaId: String, _ chapterIndex: Int) {
-        //        if let entity = savedEntities.first(where: {$0.mangaId == mangaId}){
-        //            print("I found you in my history")
-        //            if (chapterIndex > entity.read){
-        //                print("Updating the read history-------------")
-        //                delete(entity: entity)
-        //                add(mangaId, Int64(chapterIndex))
-        //                print("ADDED!! ------------------------------")
-        //            }
-        //        }
-        //        else{
-        //            print("It seems like I don't have you in my history! \(mangaId) \(chapterIndex)")
-        //            add(mangaId, Int64(chapterIndex))
-        //        }
-        let entity = savedEntities.filter({ ent in
-            ent.mangaId == mangaId
-        })
-        
-        entity.forEach { ent in
-            delete(entity: ent)
-            if (chapterIndex > ent.read){
+    func refreshView() {
+        print("Toggling")
+        refreshToggle.toggle()
+    }
+    
+    func getMangaChapterReadStatus(_ mangaId: String) -> Int?{
+        if let entity = savedEntities.first(where: { $0.mangaId == mangaId }) {
+            return Int(entity.read)
+        } else {
+            return nil
+        }
+    }
+    
+    func clearAllReadStatus(){
+        // create the delete request for the specified entity
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = ChapterReadEntity.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+        // get reference to the persistent container
+        let persistentContainer = container
+
+        // perform the delete
+        do {
+            try persistentContainer.viewContext.execute(deleteRequest)
+        } catch let error as NSError {
+            print(error)
+        }
+    }
+    
+    func setMangaChapterReadStatus(_ mangaId: String, _ chapterIndex: Int) {
+        if (chapterIndex != -1){
+            if let entity = savedEntities.first(where: {$0.mangaId == mangaId}){
+                // Found the entity in storage
+                // Let's see if we should update it
+                if (chapterIndex > entity.read){ // We are on a chapter higher than what was stored
+                    // Let's update it
+                    entity.setValue(chapterIndex, forKey: "read")
+                    applyChanges()
+                }
+            }
+            else {
+                // Otherwise if not found add it
                 add(mangaId, Int64(chapterIndex))
             }
         }
-        if entity.count == 0 {
-            add(mangaId, Int64(chapterIndex))
-        }
-        
-        
-        
-        print("Completed Add to History Call")
-        self.getReadStatus()
+        getReadHistory()
     }
     
     func removeReadChapter(_ mangaId: String){
         if let entity = savedEntities.first(where: {$0.mangaId == mangaId}){
             delete(entity: entity)
         }
-        self.getReadStatus()
+        getReadHistory()
     }
     
     // MARK: PRIVATE
     
-    func getReadStatus() {
+    func getReadHistory() {
         let request = NSFetchRequest<ChapterReadEntity>(entityName: entityName)
         do {
             savedEntities = try container.viewContext.fetch(request)
@@ -115,6 +120,6 @@ class ReadMangaDataService {
     
     private func applyChanges() {
         save()
-        getReadStatus()
+        getReadHistory()
     }
 }
