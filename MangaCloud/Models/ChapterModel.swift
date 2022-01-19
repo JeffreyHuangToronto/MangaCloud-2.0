@@ -17,6 +17,10 @@ struct ChapterModel{
         chapterImages = pages
     }
     
+    func getChapterImages() -> [String]{
+        chapterImages
+    }
+    
     mutating func setChapterIndex(_ index: Int) {
         chapter_index = index
     }

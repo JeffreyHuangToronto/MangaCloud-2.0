@@ -13,7 +13,6 @@ class Api{
         //        guard let url = URL(string: "http://localhost:8080/manga/\(manga_id)/\(chapter_name.removeZerosFromEnd())") else {
         //            return
         //        }
-        
         URLSession.shared.dataTask(with: url) { data, _, _ in
             if (data != nil){
                 let chapter = try! JSONDecoder().decode(MangaChapter.self, from: data!)

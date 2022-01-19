@@ -8,21 +8,24 @@
 import SwiftUI
 
 struct MangaDetailView: View {
-    let viewModel: MangaViewModel
+    @ObservedObject var viewModel: MangaViewModel
     @EnvironmentObject var libraryViewModel: LibraryViewModel
     @Binding var manga: MangaItem?
     
-    private let readMangaDataService = ReadMangaDataService.sharedInstance
+    @ObservedObject var chapterViewModel: ChapterViewModel
+    
+    private var readMangaDataService = ReadMangaDataService.sharedInstance
     
     @State private var selectedChapterIndex: Int = -1
     @State private var showDetailView: Bool = false
-    
     @State private var toggle = true
     
     init(manga: Binding<MangaItem?>){
         self._manga = manga
         print("Initializing Detail View for: \(manga.wrappedValue?.title ?? "Title")")
         viewModel = MangaViewModel(manga: MangaItem(_id: manga.wrappedValue?._id ?? "", title: manga.wrappedValue?.title ?? "", summary: manga.wrappedValue?.summary ?? "", cover_url: manga.wrappedValue?.cover_url ?? "", chapter_names: manga.wrappedValue?.chapter_names ?? []))
+        chapterViewModel = ChapterViewModel(manga: MangaItem(_id: manga.wrappedValue?._id ?? "", title: manga.wrappedValue?.title ?? "", summary: manga.wrappedValue?.summary ?? "", cover_url: manga.wrappedValue?.cover_url ?? "", chapter_names: manga.wrappedValue?.chapter_names ?? []), chapter_index: -1)
+//        print(chapterViewModel.manga)
     }
     
     var body: some View {
@@ -43,7 +46,7 @@ struct MangaDetailView: View {
             }
             .background(content: {
                 NavigationLink(isActive: $showDetailView) {
-                    ChapterView(manga: manga!, chapter_index: selectedChapterIndex)
+                    ChapterView(manga: manga!, chapter_index: selectedChapterIndex, chapterViewModel)
                 } label: {
                     EmptyView()
                 }
@@ -54,9 +57,11 @@ struct MangaDetailView: View {
     }
     
     private func segue(manga: MangaItem, chapterIndex: Int) {
-        print("segue")
+        print("segue: \(chapterIndex)")
         selectedChapterIndex = chapterIndex
         readMangaDataService.setMangaChapterReadStatus(viewModel.getId(), chapterIndex)
+        chapterViewModel.setChapterIndex(chapterIndex)
+        chapterViewModel.updateChapterUrls()
         showDetailView.toggle()
     }
     

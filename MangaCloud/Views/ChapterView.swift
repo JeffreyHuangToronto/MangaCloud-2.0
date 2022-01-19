@@ -11,16 +11,19 @@ struct ChapterView: View {
     @ObservedObject var viewModel: ChapterViewModel
     @Environment(\.dismiss) var dismiss
     
-//    var chapter_index: Int
+    //    var chapter_index: Int
     private let libraryDataService = LibraryDataService.sharedInstance
     private let readMangaDataService = ReadMangaDataService.sharedInstance
     
     @State var toggle = false
     
-    init(manga: MangaItem, chapter_index: Int){
+    init(manga: MangaItem, chapter_index: Int, _ vm: ChapterViewModel){
         print("Initializing Chapter for: \(manga.title) \(chapter_index)")
-        viewModel = ChapterViewModel(manga: manga, chapter_index: chapter_index)
-        readMangaDataService.setMangaChapterReadStatus(manga._id, chapter_index)
+        //        viewModel = ChapterViewModel(manga: manga, chapter_index: chapter_index)
+        viewModel = vm
+        if (chapter_index != -1){
+            readMangaDataService.setMangaChapterReadStatus(manga._id, chapter_index)
+        }
     }
     
     var body: some View {
@@ -50,7 +53,6 @@ struct ChapterView: View {
         .onTapGesture {
             withAnimation {
                 toggle.toggle()
-                print("Toggle \(toggle)")
             }
         }
         .overlay(alignment: .bottom) {
@@ -121,19 +123,18 @@ struct ChapterView: View {
                     .frame(height: ThemeSettings.topBarHeight)
                     .opacity(ThemeSettings.menuOpacity)
                     .transition(.move(edge: .top))
-                    // Status Bar Color
+                // Status Bar Color
                     .overlay(alignment: .top) {
                         ThemeSettings.primaryColor
-                        .edgesIgnoringSafeArea(.top)
-                        .frame(height: 0)
+                            .edgesIgnoringSafeArea(.top)
+                            .frame(height: 0)
                         
                     }
                     .overlay(alignment: .center) {
-
+                        
                         HStack {
                             Button{
                                 dismiss()
-//                                readMangaDataService.refreshView()
                             } label: {
                                 Image(systemName: "arrow.backward")
                             }
@@ -142,25 +143,25 @@ struct ChapterView: View {
                             .padding(15)
                             .font(.largeTitle)
                             .tint(ThemeSettings.buttonColor)
-
+                            
                             Spacer()
                             
                             VStack(alignment: HorizontalAlignment.leading){
-
+                                
                                 Text("\(viewModel.getTitle())")
                                     .foregroundColor(ThemeSettings.textColor)
                                     .fontWeight(.bold)
                                 Text("Ch. \(viewModel.getChapterName().removeZerosFromEnd())")
                                     .foregroundColor(ThemeSettings.textColor)
-
+                                
                             }
-//
-
-
+                            //
+                            
+                            
                             Spacer()
                             Button
                             {
-
+                                
                                 
                             } label: {
                                 Image(systemName: "slider.horizontal.3")
@@ -173,8 +174,8 @@ struct ChapterView: View {
                             iconButton()
                         }
                         .padding(15)
-
-
+                        
+                        
                     }
             }
             else {
@@ -186,7 +187,7 @@ struct ChapterView: View {
 
 struct ChapterView_Previews: PreviewProvider {
     static var previews: some View {
-        ChapterView(manga: dev.manga, chapter_index: 0)
+        ChapterView(manga: dev.manga, chapter_index: 0, dev.chapterViewModel)
     }
 }
 

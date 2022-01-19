@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class ReadMangaDataService {
+class ReadMangaDataService: ObservableObject {
     let container: NSPersistentContainer
     let containerName: String  = "ChapterReadContainer"
     let entityName: String = "ChapterReadEntity"

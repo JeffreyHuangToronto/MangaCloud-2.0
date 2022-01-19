@@ -23,8 +23,13 @@ class ChapterViewModel : ObservableObject {
         return model.chapterImages
     }
     
+    func getChapterImages() -> [String] {
+        model.getChapterImages()
+    }
+    
     func setChapterIndex(_ index: Int) {
         model.setChapterIndex(index)
+        updateChapterUrls()
     }
     
     func getChapterName() -> Double{
@@ -41,7 +46,6 @@ class ChapterViewModel : ObservableObject {
             readMangaDataService.setMangaChapterReadStatus(manga._id, model.chapter_index + 1)
             model.setChapterIndex(model.chapter_index + 1)
             updateChapterUrls(manga: manga, chapter_index: model.chapter_index)
-//            readMangaDataService.refreshView()
         }
     }
     
@@ -59,10 +63,11 @@ class ChapterViewModel : ObservableObject {
     
     func updateChapterUrls(){
         let dynamic_id = manga.cover_url.split(separator: "/")[3].split(separator: ".")[0]
-        print(dynamic_id)
-        Api().getMangaChapter(manga_id: manga._id, chapter_name: manga.chapter_names[model.chapter_index]) { manga in
-            self.model.updateChapterImages(manga.manga_page_urls)
-            self.loaded = true
+        if (model.chapter_index != -1){
+            Api().getMangaChapter(manga_id: String(dynamic_id), chapter_name: manga.chapter_names[model.chapter_index]) { manga in
+                self.model.updateChapterImages(manga.manga_page_urls)
+                self.loaded = true
+            }
         }
     }
     
