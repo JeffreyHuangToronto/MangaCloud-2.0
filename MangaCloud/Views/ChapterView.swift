@@ -133,7 +133,7 @@ struct ChapterView: View {
                         HStack {
                             Button{
                                 dismiss()
-                                readMangaDataService.refreshView()
+//                                readMangaDataService.refreshView()
                             } label: {
                                 Image(systemName: "arrow.backward")
                             }

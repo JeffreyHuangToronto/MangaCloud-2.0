@@ -26,149 +26,31 @@ struct MangaDetailView: View {
     }
     
     var body: some View {
-        ScrollView {
-            ZStack(alignment: Alignment.top) {
-                VStack{
-                    AsyncImage(url: URL(string: viewModel.getCoverUrl())) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .scaledToFill()
-                        
-                            .blur(radius: 10, opaque: false)
-                            .frame(height: ThemeSettings.heroHeight)
-                            .ignoresSafeArea()
-                            .background(.regularMaterial)
-                            .brightness(-0.2)
-                            .clipped()
-                        
-                        
-                    } placeholder: {
-                        ProgressView()
+        ZStack {
+            ScrollView {
+                VStack {
+                    HStack(alignment: .center){
+                        coverImage
+                        title
                     }
-                    //                    .edgesIgnoringSafeArea(.top)
-                    .edgesIgnoringSafeArea(Edge.Set.top)
-                    
-                    
+                    actionBar
+                    summary
+                    chapters
                 }
-                .edgesIgnoringSafeArea(Edge.Set.top)
-                
-                LazyVStack {
-                    VStack {
-                        Spacer()
-                        HStack {
-                            AsyncImage(url: URL(string: viewModel.getCoverUrl())) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(3/4, contentMode: .fit)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 2)
-                                            .stroke(Color.white, lineWidth: 3)
-                                    )
-                            } placeholder: {
-                                ProgressView()
-                            }
-                            .frame(height: 300)
-                            .padding(ThemeSettings.normalPadding)
-                            .padding(.leading, 30)
-                            VStack {
-                                Spacer()
-                                HStack{
-                                    Text(viewModel.getTitle())
-                                        .fontWeight(.bold)
-                                    //                                        .font(.system(size: ,weight: .bold, design: .rounded))
-                                        .fontWeight(.bold)
-                                    //                                        .font(.Design.rounded)
-                                        .font(.title)
-                                        .foregroundColor(ThemeSettings.largeTitleColor)
-                                    //                                .frame(width: 500, height: 250, alignment: .topLeading)
-                                        .padding(Edge.Set.top, ThemeSettings.normalPadding)
-                                    Spacer()
-                                }
-                                
-                                Spacer()
-                                HStack(alignment: VerticalAlignment.top)
-                                {
-                                    if (libraryViewModel.isFavorited(_id: viewModel.getId()))
-                                    {
-                                        Button
-                                        {
-                                            libraryViewModel.updateSavedLibrary(viewModel.getId())
-                                        } label: {
-                                            Image(systemName: "bookmark.fill")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: ThemeSettings.iconSize, height: ThemeSettings.iconSize)
-                                                .tint(ThemeSettings.buttonColor)
-                                                .padding(10)
-                                        }
-                                    } else {
-                                        Button
-                                        {
-                                            libraryViewModel.updateSavedLibrary(viewModel.getId())
-                                        } label: {
-                                            Image(systemName: "bookmark")
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: ThemeSettings.iconSize, height: ThemeSettings.iconSize)
-                                                .tint(ThemeSettings.buttonColor)
-                                                .padding(10)
-                                        }
-                                    }
-                                    Spacer()
-                                    Button(readMangaDataService.getMangaChapterReadStatus(viewModel.getId()) != nil ? "Continue Reading Chapter: \(viewModel.getChapterNames()[readMangaDataService.getMangaChapterReadStatus(viewModel.getId())!])" : "Start reading"){
-                                        if (readMangaDataService.getMangaChapterReadStatus(viewModel.getId()) != nil){
-                                            segue(manga: viewModel.getManga(), chapterIndex: readMangaDataService.getMangaChapterReadStatus(viewModel.getId())!)
-                                        }
-                                        else {
-                                            segue(manga: viewModel.getManga(), chapterIndex: 0)
-                                        }
-                                    }
-                                }
-                                
-                            }
-                            Spacer()
-                        }
-                        Text(viewModel.getSummary())
-                            .lineLimit(toggle ? 2 : nil)
-                            .foregroundColor(Color(.label))
-                            .padding(10)
-                            .padding(Edge.Set.leading, ThemeSettings.normalPadding)
-                            .onTapGesture {
-                                toggle.toggle()
-                            }
-                        
-                        // Chapter Buttons
-                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 100, maximum: 100))]) {
-                            ForEach(0..<viewModel.getChapterNames().count) { index in
-                                
-                                RoundedRectangle(cornerRadius: 5)
-                                    .fill(ThemeSettings.primaryColor)
-                                    .frame(width: 90, height: 45)
-                                //                                    .padding(ThemeSettings.normalPadding)
-                                    .overlay {
-                                        Text("\(viewModel.getChapterNames()[index].removeZerosFromEnd())")
-                                            .foregroundColor(ThemeSettings.textColor)
-                                        //                                            .shadow(color: ThemeSettings.primaryColor, radius: 5, x: 0, y: 0)
-                                    }
-                                    .onTapGesture {
-                                        segue(manga: manga!, chapterIndex: index)
-                                    }
-                            }
-                        }
-                    }
-                    
+                .background(alignment: .top){
+                    bannerImage
                 }
             }
-            
+            .background(content: {
+                NavigationLink(isActive: $showDetailView) {
+                    ChapterView(manga: manga!, chapter_index: selectedChapterIndex)
+                } label: {
+                    EmptyView()
+                }
+            })
         }
-        .background(content: {
-            NavigationLink(isActive: $showDetailView) {
-                ChapterView(manga: manga!, chapter_index: selectedChapterIndex)
-            } label: {
-                EmptyView()
-            }
-        })
+        .navigationBarHidden(false)
+        
     }
     
     private func segue(manga: MangaItem, chapterIndex: Int) {
@@ -177,13 +59,116 @@ struct MangaDetailView: View {
         readMangaDataService.setMangaChapterReadStatus(viewModel.getId(), chapterIndex)
         showDetailView.toggle()
     }
+    
+    // MARK: USER INTERFACE ITEMS
+    
+    private var bannerImage: some View {
+        AsyncImage(url: URL(string: viewModel.getCoverUrl())) { image in
+            image
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .scaledToFill()
+                .blur(radius: 10, opaque: false)
+                .frame(height: ThemeSettings.heroHeight)
+                .ignoresSafeArea()
+                .border(Color.red)
+                .background(.regularMaterial)
+                .brightness(-0.2)
+                .clipped()
+                .offset(x: 0, y: -50)
+        } placeholder: {
+            ProgressView()
+        }
+    }
+    
+    private var coverImage: some View {
+        AsyncImage(url: URL(string: viewModel.getCoverUrl())) { image in
+            image
+                .resizable()
+                .aspectRatio(3/4, contentMode: .fit)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 2)
+                        .stroke(Color.white, lineWidth: 3)
+                )
+        } placeholder: {
+            ProgressView()
+        }
+        .padding(.top, 75)
+        .padding(.leading,ThemeSettings.normalPadding)
+    }
+    
+    private var title: some View {
+        Text(viewModel.getTitle())
+            .fontWeight(.bold)
+            .font(.title)
+            .foregroundColor(ThemeSettings.largeTitleColor)
+            .padding(Edge.Set.top, ThemeSettings.normalPadding)
+    }
+    
+    // Summary
+    private var summary: some View {
+        Text(viewModel.getSummary())
+            .lineLimit(toggle ? 2 : nil)
+            .foregroundColor(Color(.label))
+            .padding(Edge.Set.leading, ThemeSettings.normalPadding)
+            .onTapGesture {
+                toggle.toggle()
+            }
+    }
+    
+    // Chapter Buttons
+    private var chapters: some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 100, maximum: 100))]) {
+            ForEach(0..<viewModel.getChapterNames().count) { index in
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(ThemeSettings.primaryColor)
+                    .frame(width: 90, height: 45)
+                    .overlay {
+                        Text("\(viewModel.getChapterNames()[index].removeZerosFromEnd())")
+                            .foregroundColor(ThemeSettings.textColor)
+                    }
+                    .onTapGesture {
+                        segue(manga: manga!, chapterIndex: index)
+                    }
+            }
+        }
+    }
+    
+    // Favorite bar, last read
+    private var actionBar: some View {
+        HStack(alignment: VerticalAlignment.top)
+        {
+            let isFav = libraryViewModel.isFavorited(_id: viewModel.getId())
+            Button {
+                libraryViewModel.updateSavedLibrary(viewModel.getId())
+            } label: {
+                Image(systemName: isFav ? "bookmark.fill" : "bookmark")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: ThemeSettings.iconSize, height: ThemeSettings.iconSize)
+                    .tint(ThemeSettings.buttonColor)
+                
+            }
+            Spacer()
+            let _id = viewModel.getId()
+            let readStatus = readMangaDataService.getMangaChapterReadStatus(_id)
+            let chapterNames = viewModel.getChapterNames()
+            
+            Button(readStatus != nil ? "Continue Reading Chapter: \(chapterNames[readStatus!].removeZerosFromEnd())" : "Start reading"){
+                segue(manga: viewModel.getManga(), chapterIndex: readStatus != nil ? readStatus! : 0)
+            }
+        }
+        .padding(.top, 10)
+        .padding(.bottom, 10)
+        .padding(.leading, ThemeSettings.normalPadding)
+        .padding(.trailing, ThemeSettings.normalPadding)
+    }
 }
 
 
 struct MangaInfoView_Previews: PreviewProvider {
     
     static var previews: some View {
-        //        let viewModel = MangaViewModel(manga: dev.manga)
         MangaDetailView(manga: .constant(dev.manga)).environmentObject(dev.userLibraryViewModel)
     }
 }
@@ -203,5 +188,5 @@ private struct ThemeSettings {
     static let topBarWidth: Double = .infinity
     static let normalPadding: Double = 20
     static let largeTitleColor: Color = .white
-    static let heroHeight: Double = Double(UIScreen.main.bounds.height / 4)
+    static let heroHeight: Double = Double(UIScreen.main.bounds.height / 3)
 }

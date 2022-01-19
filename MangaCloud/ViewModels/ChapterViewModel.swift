@@ -41,7 +41,7 @@ class ChapterViewModel : ObservableObject {
             readMangaDataService.setMangaChapterReadStatus(manga._id, model.chapter_index + 1)
             model.setChapterIndex(model.chapter_index + 1)
             updateChapterUrls(manga: manga, chapter_index: model.chapter_index)
-            readMangaDataService.refreshView()
+//            readMangaDataService.refreshView()
         }
     }
     

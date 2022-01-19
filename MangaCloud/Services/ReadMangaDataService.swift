@@ -18,7 +18,7 @@ class ReadMangaDataService {
     
     
     @Published var savedEntities: [ChapterReadEntity] = []
-    @Published var refreshToggle: Bool = false
+//    @Published var refreshToggle: Bool = false
     
     private init() {
         container = NSPersistentContainer(name: containerName)
@@ -31,10 +31,10 @@ class ReadMangaDataService {
     }
     // MARK: PUBLIC
     
-    func refreshView() {
-        print("Toggling")
-        refreshToggle.toggle()
-    }
+//    func refreshView() {
+//        print("Toggling")
+//        refreshToggle.toggle()
+//    }
     
     func getMangaChapterReadStatus(_ mangaId: String) -> Int?{
         if let entity = savedEntities.first(where: { $0.mangaId == mangaId }) {
