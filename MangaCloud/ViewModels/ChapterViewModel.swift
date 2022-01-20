@@ -43,6 +43,7 @@ class ChapterViewModel : ObservableObject {
     func goNext(){
         let inBounds = model.chapter_index < manga.chapter_names.count - 1
         if (inBounds){
+            self.loaded = false
             readMangaDataService.setMangaChapterReadStatus(manga._id, model.chapter_index + 1)
             model.setChapterIndex(model.chapter_index + 1)
             updateChapterUrls(manga: manga, chapter_index: model.chapter_index)
@@ -52,6 +53,7 @@ class ChapterViewModel : ObservableObject {
     func goBack(){
         let inBounds = model.chapter_index > 0
         if (inBounds){
+            self.loaded = false
             model.setChapterIndex(model.chapter_index - 1)
             updateChapterUrls(manga: manga, chapter_index: model.chapter_index)
         }

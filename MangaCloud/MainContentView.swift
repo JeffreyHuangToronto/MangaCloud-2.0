@@ -32,7 +32,7 @@ struct MainContentView: View {
                     // Tab bar items
                     HStack {
                         TabBarIcon(viewRouter: viewRouter, assignedPage: .library, width: geometry.size.width/5, height: geometry.size.height/28, systemIconName: "bookmark.circle.fill", tabName: "Library")
-                        TabBarIcon(viewRouter: viewRouter, assignedPage: .latest, width: geometry.size.width/5, height: geometry.size.height/28, systemIconName: "books.vertical.fill", tabName: "Latest")
+                        TabBarIcon(viewRouter: viewRouter, assignedPage: .latest, width: geometry.size.width/5, height: geometry.size.height/28, systemIconName: "books.vertical.fill", tabName: "Manga")
                         TabBarIcon(viewRouter: viewRouter, assignedPage: .settings, width: geometry.size.width/5, height: geometry.size.height/28, systemIconName: "gearshape.fill", tabName: "Settings")
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height/8)
