@@ -12,11 +12,31 @@ struct LatestView: View {
     
     @State private var selectedManga: MangaItem? = nil
     @State private var showDetailView: Bool = false
+    @State private var searchText = ""
+    
+    @State private var search: [MangaItem] = []
     
     init(viewModel: LatestViewModel){
         self.viewModel = viewModel
         print("Init: Creating LatestView")
     }
+    
+    var searchResults: [MangaItem] {
+        if searchText.isEmpty {
+            return viewModel.getLatestManga().latest
+        } else {
+            return search
+        }
+    }
+    
+    func getSearchResult() {
+        print("Searching")
+        Api().search(searchText, completion: { SearchItem in
+            search = SearchItem.result
+        })
+    }
+    
+    
     
     var body: some View {
         let latest = viewModel.getLatestManga().latest
@@ -24,7 +44,7 @@ struct LatestView: View {
         if  latest.count != 0 {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
-                    ForEach(latest, id: \.self) { manga in
+                    ForEach(searchResults, id: \.self) { manga in
                         MangaItemView(manga: manga)
                             .onTapGesture {
                                 segue(manga: manga)
@@ -32,11 +52,15 @@ struct LatestView: View {
                     }
                 }
             }
+            .searchable(text: $searchText)
+            .onSubmit(of: .search) {
+                getSearchResult()
+            }
             
             .navigationViewStyle(StackNavigationViewStyle())
-            .navigationBarTitle("")
+            .navigationBarTitle("Manga")
             .navigationBarBackButtonHidden(true)
-            .navigationBarHidden(true)
+            .navigationBarHidden(false)
             .background(content: {
                 NavigationLink(isActive: $showDetailView) {
                     MangaDetailView(manga: $selectedManga)

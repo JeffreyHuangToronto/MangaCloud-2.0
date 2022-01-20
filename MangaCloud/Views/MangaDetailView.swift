@@ -76,7 +76,7 @@ struct MangaDetailView: View {
                 .blur(radius: 10, opaque: false)
                 .frame(height: ThemeSettings.heroHeight)
                 .ignoresSafeArea()
-                .border(Color.red)
+//                .border(Color.red)
                 .background(.regularMaterial)
                 .brightness(-0.2)
                 .clipped()
