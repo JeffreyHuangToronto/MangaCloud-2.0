@@ -22,6 +22,11 @@ struct LatestView: View {
         print("Init: Creating LatestView")
     }
     
+    init(){
+        viewModel = LatestViewModel()
+        print("Creating Latest View")
+    }
+    
     var searchResults: [MangaItem] {
         if searchText.isEmpty {
             return viewModel.getLatestManga().latest
@@ -41,7 +46,6 @@ struct LatestView: View {
     
     var body: some View {
         if (user.loggedIn){
-            let a = viewModel.update()
             let latest = viewModel.getLatestManga().latest
             
             if  latest.count != 0 {

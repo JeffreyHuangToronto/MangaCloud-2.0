@@ -8,10 +8,17 @@
 import SwiftUI
 
 struct LibraryView: View {
-    @EnvironmentObject var viewModel: LibraryViewModel
+//    @EnvironmentObject var viewModel: LibraryViewModel
+    @ObservedObject var viewModel: LibraryViewModel
     
     @State private var selectedManga: MangaItem? = nil
     @State private var showDetailView: Bool = false
+    
+    
+    init(){
+        print("Library View")
+        viewModel = LibraryViewModel()
+    }
     
     @ObservedObject private var user = UserModel.instance
     var body: some View {
@@ -19,7 +26,6 @@ struct LibraryView: View {
         if (!user.loggedIn){
             Text("Please loging")
         } else {
-            let a = viewModel.updateLibrary()
             let library = viewModel.getLibrary()
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){

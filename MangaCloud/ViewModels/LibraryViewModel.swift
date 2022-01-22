@@ -23,6 +23,7 @@ class LibraryViewModel : ObservableObject {
         updateLibrary()
     }
     
+    
     func getLibraryMangaIds() -> Array<String> {
         return savedMangaIds
     }
