@@ -11,15 +11,17 @@ struct Settings: View {
     private let readMangaDataService = ReadMangaDataService.sharedInstance
     private let libraryDataService = LibraryDataService.sharedInstance
     var body: some View {
-        Button {
-            readMangaDataService.clearAllReadStatus()
-        } label: {
-            Text("Clear Read History")
-        }
-        Button {
-            libraryDataService.clearAllLibrary()
-        } label: {
-            Text("Clear Library")
+        VStack{
+            Button {
+                readMangaDataService.clearAllReadStatus()
+            } label: {
+                Text("Clear Read History")
+            }
+            Button {
+                libraryDataService.clearAllLibrary()
+            } label: {
+                Text("Clear Library")
+            }
         }
     }
 }

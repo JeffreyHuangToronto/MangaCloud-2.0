@@ -11,6 +11,7 @@ struct ChapterView: View {
     @ObservedObject var viewModel: ChapterViewModel
     @Environment(\.dismiss) var dismiss
     
+    @State var lastScaleValue: CGFloat = 1.0
     //    var chapter_index: Int
     private let libraryDataService = LibraryDataService.sharedInstance
     private let readMangaDataService = ReadMangaDataService.sharedInstance
@@ -182,6 +183,7 @@ struct ChapterView: View {
                 EmptyView()
             }
         })
+        
     }
 }
 

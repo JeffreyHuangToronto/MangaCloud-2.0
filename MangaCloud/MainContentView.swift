@@ -11,11 +11,11 @@ struct MainContentView: View {
     @StateObject var viewRouter: ViewRouter
     @StateObject var userLibraryViewModel = LibraryViewModel()
     @StateObject var latestViewModel = LatestViewModel()
+    @StateObject var user = UserModel()
     
     @State var lastPage: Page = .library
     
     var body: some View {
-        
         GeometryReader { geometry in
             NavigationView {
                 VStack {
