@@ -17,6 +17,8 @@
 		1B2EE2E1278B642200A93ED0 /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2EE2E0278B642200A93ED0 /* PreviewProvider.swift */; };
 		1B3D9E9E278172FE00368D71 /* LatestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3D9E9D278172FE00368D71 /* LatestModel.swift */; };
 		1B767DB6279CB35600FAE5A5 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B767DB5279CB35600FAE5A5 /* UserModel.swift */; };
+		1B767DB9279CB9ED00FAE5A5 /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = 1B767DB8279CB9ED00FAE5A5 /* Auth0 */; };
+		1B767DBB279CBA2F00FAE5A5 /* Auth0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B767DBA279CBA2F00FAE5A5 /* Auth0.plist */; };
 		1B7E49402749B38A0045182F /* MangaCloudApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7E493F2749B38A0045182F /* MangaCloudApp.swift */; };
 		1B7E49422749B38A0045182F /* MainContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7E49412749B38A0045182F /* MainContentView.swift */; };
 		1B7E49442749B38B0045182F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B7E49432749B38B0045182F /* Assets.xcassets */; };
@@ -66,6 +68,8 @@
 		1B2EE2E0278B642200A93ED0 /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
 		1B3D9E9D278172FE00368D71 /* LatestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestModel.swift; sourceTree = "<group>"; };
 		1B767DB5279CB35600FAE5A5 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		1B767DBA279CBA2F00FAE5A5 /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Auth0.plist; sourceTree = "<group>"; };
+		1B767DBD279CBA6600FAE5A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1B7E493C2749B38A0045182F /* MangaCloud.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MangaCloud.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B7E493F2749B38A0045182F /* MangaCloudApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MangaCloudApp.swift; sourceTree = "<group>"; };
 		1B7E49412749B38A0045182F /* MainContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentView.swift; sourceTree = "<group>"; };
@@ -95,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B767DB9279CB9ED00FAE5A5 /* Auth0 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +137,14 @@
 			path = Extentions;
 			sourceTree = "<group>";
 		};
+		1B767DBC279CBA3400FAE5A5 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				1B767DBA279CBA2F00FAE5A5 /* Auth0.plist */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
 		1B7E49332749B38A0045182F = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +168,8 @@
 		1B7E493E2749B38A0045182F /* MangaCloud */ = {
 			isa = PBXGroup;
 			children = (
+				1B767DBD279CBA6600FAE5A5 /* Info.plist */,
+				1B767DBC279CBA3400FAE5A5 /* Authentication */,
 				1B2EE2DF278B641000A93ED0 /* Extentions */,
 				1BBBB3CA2789FC9D00344892 /* Services */,
 				1BBBB3CC278B5AEF00344892 /* Views */,
@@ -203,7 +218,6 @@
 				1BEB30982776966300359B83 /* ChapterModel.swift */,
 				1BBBB3C42789F80F00344892 /* LibraryContainer.xcdatamodeld */,
 				1B881781278E55C90094CC07 /* ChapterReadContainer.xcdatamodeld */,
-				1B767DB5279CB35600FAE5A5 /* UserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -224,6 +238,7 @@
 				1B2D4361277D73DD00482C04 /* LatestViewModel.swift */,
 				1BEB309A277696B500359B83 /* ChapterViewModel.swift */,
 				1B2D43692780EE3800482C04 /* MangaViewModel.swift */,
+				1B767DB5279CB35600FAE5A5 /* UserModel.swift */,
 				1B88177D278CFB060094CC07 /* ViewRouter.swift */,
 			);
 			path = ViewModels;
@@ -257,6 +272,9 @@
 			dependencies = (
 			);
 			name = MangaCloud;
+			packageProductDependencies = (
+				1B767DB8279CB9ED00FAE5A5 /* Auth0 */,
+			);
 			productName = MangaCloud;
 			productReference = 1B7E493C2749B38A0045182F /* MangaCloud.app */;
 			productType = "com.apple.product-type.application";
@@ -329,6 +347,9 @@
 				Base,
 			);
 			mainGroup = 1B7E49332749B38A0045182F;
+			packageReferences = (
+				1B767DB7279CB9ED00FAE5A5 /* XCRemoteSwiftPackageReference "Auth0.swift" */,
+			);
 			productRefGroup = 1B7E493D2749B38A0045182F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -346,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B7E49472749B38B0045182F /* Preview Assets.xcassets in Resources */,
+				1B767DBB279CBA2F00FAE5A5 /* Auth0.plist in Resources */,
 				1B7E49442749B38B0045182F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -558,6 +580,7 @@
 				DEVELOPMENT_TEAM = Z99V2Z2WVU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MangaCloud/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -587,6 +610,7 @@
 				DEVELOPMENT_TEAM = Z99V2Z2WVU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MangaCloud/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -741,6 +765,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1B767DB7279CB9ED00FAE5A5 /* XCRemoteSwiftPackageReference "Auth0.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/Auth0.swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1B767DB8279CB9ED00FAE5A5 /* Auth0 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B767DB7279CB9ED00FAE5A5 /* XCRemoteSwiftPackageReference "Auth0.swift" */;
+			productName = Auth0;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		1B881781278E55C90094CC07 /* ChapterReadContainer.xcdatamodeld */ = {

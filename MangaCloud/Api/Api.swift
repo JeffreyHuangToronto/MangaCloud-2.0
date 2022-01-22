@@ -41,11 +41,16 @@ class Api{
         .resume()
     }
     
-    func getLatestChapters(completion: @escaping (LatestMangaList) -> ()){
-        guard let url = URL(string: "https://mangacloudapi.azurewebsites.net/manga/latest") else { return }
+    func getLatestChapters(_ token: String, completion: @escaping (LatestMangaList) -> ()){
+//        guard let url = URL(string: "https://mangacloudapi.azurewebsites.net/manga/latest") else { return }
         //        guard let url = URL(string: "http://localhost:8080/manga/latest") else { return }
         
-        URLSession.shared.dataTask(with: url) { data, _, _ in
+        let request = NSMutableURLRequest(url: NSURL(string: "https://mangacloudapi.azurewebsites.net/manga/latest")! as URL,
+                                                cachePolicy: .useProtocolCachePolicy,
+                                            timeoutInterval: 10.0)
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request as URLRequest) { data, _, _ in
             if (data != nil){
                 let chapter = try! JSONDecoder().decode(LatestMangaList.self, from: data!)
                 DispatchQueue.main.async {
@@ -56,7 +61,7 @@ class Api{
         .resume()
     }
     
-    func getLibraryMangaList(mangaIdList: Array<String>, completion: @escaping (Library) -> ()){
+    func getLibraryMangaList(_ token: String, mangaIdList: Array<String>, completion: @escaping (Library) -> ()){
         //        guard let url = URL(string: "https://mangacloudapi.azurewebsites.net/manga/") else { return }
         //        guard let url = URL(string: "http://localhost:8080/manga/latest") else { return }
         
@@ -74,6 +79,8 @@ class Api{
         request.httpMethod = "POST"
         request.httpBody = postData as Data
         request.allHTTPHeaderFields = headers
+        request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+
         
         URLSession.shared.dataTask(with: request as URLRequest) { data, _, _ in
             if (data != nil){

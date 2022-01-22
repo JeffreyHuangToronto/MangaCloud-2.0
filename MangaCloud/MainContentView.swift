@@ -11,7 +11,6 @@ struct MainContentView: View {
     @StateObject var viewRouter: ViewRouter
     @StateObject var userLibraryViewModel = LibraryViewModel()
     @StateObject var latestViewModel = LatestViewModel()
-    @StateObject var user = UserModel()
     
     @State var lastPage: Page = .library
     
@@ -42,6 +41,7 @@ struct MainContentView: View {
             }
             .environmentObject(userLibraryViewModel)
             .navigationViewStyle(StackNavigationViewStyle())
+            
         }
     }
     
@@ -49,7 +49,6 @@ struct MainContentView: View {
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
             MainContentView(viewRouter: ViewRouter())
-                .previewInterfaceOrientation(.portrait)
         }
     }
 }

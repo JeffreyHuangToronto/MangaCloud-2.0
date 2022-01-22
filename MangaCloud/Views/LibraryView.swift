@@ -13,27 +13,32 @@ struct LibraryView: View {
     @State private var selectedManga: MangaItem? = nil
     @State private var showDetailView: Bool = false
     
+    @ObservedObject private var user = UserModel.instance
     var body: some View {
-        let library = viewModel.getLibrary()
         
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
-                ForEach(library, id: \.self) { manga in
-                    MangaItemView(manga: manga).onTapGesture {
-                        segue(manga: manga)
+        if (!user.loggedIn){
+            Text("Please loging")
+        } else {
+            let a = viewModel.updateLibrary()
+            let library = viewModel.getLibrary()
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
+                    ForEach(library, id: \.self) { manga in
+                        MangaItemView(manga: manga).onTapGesture {
+                            segue(manga: manga)
+                        }
                     }
                 }
             }
+            .background(content: {
+                NavigationLink(isActive: $showDetailView) {
+                    MangaDetailView(manga: $selectedManga)
+                } label: {
+                    EmptyView()
+                }
+            })
+            .navigationBarHidden(true)
         }
-        .background(content: {
-            NavigationLink(isActive: $showDetailView) {
-                MangaDetailView(manga: $selectedManga)
-            } label: {
-                EmptyView()
-            }
-        })
-        .navigationBarHidden(true)
-            
     }
     
     private func segue(manga: MangaItem){

@@ -11,6 +11,8 @@ import Combine
 class LibraryViewModel : ObservableObject {
     @Published private var model: LibraryModel
     
+    @ObservedObject private var user = UserModel.instance
+    
     private var savedMangaIds: [String] = []
     
     private let libraryDataService = LibraryDataService.sharedInstance
@@ -35,16 +37,20 @@ class LibraryViewModel : ObservableObject {
     
     func updateLibrary(){
         savedMangaIds = libraryDataService.savedEntities.map { $0.mangaId!}
-        Api().getLibraryMangaList(mangaIdList: getLibraryMangaIds(), completion: { userLibrary in
-            self.model.updateLibrary(library: userLibrary)
-        })
+        if (user.loggedIn){
+            Api().getLibraryMangaList(user.accessToken, mangaIdList: getLibraryMangaIds(), completion: { userLibrary in
+                self.model.updateLibrary(library: userLibrary)
+            })
+        }
     }
     
     func updateLibrary(savedManga: [String]){
         savedMangaIds = libraryDataService.savedEntities.map { $0.mangaId!}
-        Api().getLibraryMangaList(mangaIdList: getLibraryMangaIds(), completion: { userLibrary in
-            self.model.updateLibrary(library: userLibrary)
-        })
+        if (user.loggedIn){
+            Api().getLibraryMangaList(user.accessToken, mangaIdList: getLibraryMangaIds(), completion: { userLibrary in
+                self.model.updateLibrary(library: userLibrary)
+            })
+        }
     }
     
     init(){

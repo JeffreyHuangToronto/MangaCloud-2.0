@@ -10,6 +10,7 @@ import SwiftUI
 class LatestViewModel : ObservableObject {
     @Published private var model: LatestModel
     
+    @ObservedObject private var user = UserModel.instance
     func updateLatest(_ latest: LatestMangaList) {
         model.updateLatestManga(latestManga: latest)
     }
@@ -18,12 +19,19 @@ class LatestViewModel : ObservableObject {
         model.latestManga
     }
     
+    func update(){
+        Api().getLatestChapters(user.accessToken) { latest in
+            self.model.updateLatestManga(latestManga: latest)
+        }
+    }
+    
     init(){
         model = LatestModel()
         print("Init: Getting Latest Manga")
-        Api().getLatestChapters { latest in
-            self.model.updateLatestManga(latestManga: latest)
+        if (user.loggedIn){
+            Api().getLatestChapters(user.accessToken){ latest in
+                self.model.updateLatestManga(latestManga: latest)
+            }
         }
-        
     }
 }
