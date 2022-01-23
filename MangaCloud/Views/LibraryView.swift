@@ -24,7 +24,7 @@ struct LibraryView: View {
     var body: some View {
         
         if (!user.loggedIn){
-            Text("Please loging")
+            Text("Please login")
         } else {
             let library = viewModel.getLibrary()
             ScrollView {

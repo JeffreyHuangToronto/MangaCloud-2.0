@@ -46,7 +46,7 @@ struct MangaDetailView: View {
             }
             .background(content: {
                 NavigationLink(isActive: $showDetailView) {
-                    ChapterView(manga: manga!, chapter_index: selectedChapterIndex, chapterViewModel)
+                    ChapterView(manga: manga!, chapter_index: selectedChapterIndex)
                 } label: {
                     EmptyView()
                 }

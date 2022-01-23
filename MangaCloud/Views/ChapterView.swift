@@ -13,19 +13,28 @@ struct ChapterView: View {
     
     @State var lastScaleValue: CGFloat = 1.0
     //    var chapter_index: Int
-    private let libraryDataService = LibraryDataService.sharedInstance
-    private let readMangaDataService = ReadMangaDataService.sharedInstance
+    private var libraryDataService = LibraryDataService.sharedInstance
+    private var readMangaDataService = ReadMangaDataService.sharedInstance
     
     @State var toggle = false
     
     init(manga: MangaItem, chapter_index: Int, _ vm: ChapterViewModel){
         print("Initializing Chapter for: \(manga.title) \(chapter_index)")
-        //        viewModel = ChapterViewModel(manga: manga, chapter_index: chapter_index)
         viewModel = vm
         if (chapter_index != -1){
             readMangaDataService.setMangaChapterReadStatus(manga._id, chapter_index)
         }
     }
+    
+    init(manga: MangaItem, chapter_index: Int){
+        print("Chapter for: \(manga.title) \(chapter_index)")
+        viewModel = ChapterViewModel(manga: manga, chapter_index: chapter_index)
+        if (chapter_index != -1){
+            readMangaDataService.setMangaChapterReadStatus(manga._id, chapter_index)
+        }
+    }
+    
+    
     
     var body: some View {
         ScrollView {
@@ -56,6 +65,7 @@ struct ChapterView: View {
                 toggle.toggle()
             }
         }
+        .frame(width: UIScreen.main.bounds.width)
         .overlay(alignment: .bottom) {
             if (toggle){
                 Rectangle()

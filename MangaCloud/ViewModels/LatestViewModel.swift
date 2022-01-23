@@ -20,7 +20,7 @@ class LatestViewModel : ObservableObject {
     }
     
     func update(){
-        Api().getLatestChapters(user.accessToken) { latest in
+        Api().getLatestChapters { latest in
             self.model.updateLatestManga(latestManga: latest)
         }
     }
@@ -29,7 +29,7 @@ class LatestViewModel : ObservableObject {
         model = LatestModel()
         print("Init: Getting Latest Manga")
         if (user.loggedIn){
-            Api().getLatestChapters(user.accessToken){ latest in
+            Api().getLatestChapters{ latest in
                 self.model.updateLatestManga(latestManga: latest)
             }
         }
