@@ -21,11 +21,11 @@ struct LatestView: View {
         self.viewModel = viewModel
         print("Init: Creating LatestView")
     }
-    
-    init(){
-        viewModel = LatestViewModel()
-        print("Creating Latest View")
-    }
+//
+//    init(){
+//        viewModel = LatestViewModel()
+//        print("Creating Latest View")
+//    }
     
     var searchResults: [MangaItem] {
         if searchText.isEmpty {

@@ -10,7 +10,7 @@ import SwiftUI
 struct MainContentView: View {
     @StateObject var viewRouter: ViewRouter
     var userLibraryViewModel = LibraryViewModel()
-//    @StateObject var latestViewModel = LatestViewModel()
+    @StateObject var latestViewModel = LatestViewModel()
     @ObservedObject var user = UserModel.instance
     
     @State var lastPage: Page = .library
@@ -24,8 +24,8 @@ struct MainContentView: View {
                     case .library:
                         LibraryView()
                     case .latest:
-//                        LatestView(viewModel: latestViewModel)
-                        LatestView()
+                        LatestView(viewModel: latestViewModel)
+//                        LatestView()
                     case .settings:
                         Settings()
                     }
