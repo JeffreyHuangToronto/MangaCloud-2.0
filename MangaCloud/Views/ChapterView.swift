@@ -41,7 +41,11 @@ struct ChapterView: View {
             VStack {
                 let urls = viewModel.getChapterUrls()
                 if (!viewModel.isLoaded()){
+                    VStack{
                     Text("Loading Chapter\n Please Wait")
+                        .font(Font.largeTitle.weight(.bold))
+                        ProgressView().progressViewStyle(.linear)
+                    }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height, alignment: .center)
                 }
                 else{
                     ForEach(urls, id: \.self){ i in

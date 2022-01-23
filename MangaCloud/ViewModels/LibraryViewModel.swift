@@ -38,20 +38,20 @@ class LibraryViewModel : ObservableObject {
     
     func updateLibrary(){
         savedMangaIds = libraryDataService.savedEntities.map { $0.mangaId!}
-        if (user.loggedIn){
+//        if (user.loggedIn){
             Api().getLibraryMangaList(mangaIdList: getLibraryMangaIds(), completion: { userLibrary in
                 self.model.updateLibrary(library: userLibrary)
             })
-        }
+//        }
     }
     
     func updateLibrary(savedManga: [String]){
         savedMangaIds = libraryDataService.savedEntities.map { $0.mangaId!}
-        if (user.loggedIn){
+//        if (user.loggedIn){
             Api().getLibraryMangaList(mangaIdList: getLibraryMangaIds(), completion: { userLibrary in
                 self.model.updateLibrary(library: userLibrary)
             })
-        }
+//        }
     }
     
     init(){

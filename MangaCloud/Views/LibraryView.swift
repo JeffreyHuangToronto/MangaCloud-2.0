@@ -23,9 +23,9 @@ struct LibraryView: View {
     @ObservedObject private var user = UserModel.instance
     var body: some View {
         
-        if (!user.loggedIn){
-            Text("Please login")
-        } else {
+//        if (!user.loggedIn){
+//            Text("Please login")
+//        } else {
             let library = viewModel.getLibrary()
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
@@ -44,7 +44,7 @@ struct LibraryView: View {
                 }
             })
             .navigationBarHidden(true)
-        }
+//        }
     }
     
     private func segue(manga: MangaItem){

@@ -45,7 +45,7 @@ struct LatestView: View {
     
     
     var body: some View {
-        if (user.loggedIn){
+//        if (user.loggedIn){
             let latest = viewModel.getLatestManga().latest
             
             if  latest.count != 0 {
@@ -80,10 +80,10 @@ struct LatestView: View {
             else{
                 Text("Loading Manga")
             }
-        }
-        else{
-            Text("Login to view manga")
-        }
+//        }
+//        else{
+//            Text("Login to view manga")
+//        }
        
         
         

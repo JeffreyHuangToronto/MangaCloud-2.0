@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainContentView: View {
     @StateObject var viewRouter: ViewRouter
-    @StateObject var userLibraryViewModel = LibraryViewModel()
+    var userLibraryViewModel = LibraryViewModel()
 //    @StateObject var latestViewModel = LatestViewModel()
     @ObservedObject var user = UserModel.instance
     

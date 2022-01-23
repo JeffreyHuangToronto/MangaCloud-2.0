@@ -28,10 +28,10 @@ class LatestViewModel : ObservableObject {
     init(){
         model = LatestModel()
         print("Init: Getting Latest Manga")
-        if (user.loggedIn){
+//        if (user.loggedIn){
             Api().getLatestChapters{ latest in
                 self.model.updateLatestManga(latestManga: latest)
             }
-        }
+//        }
     }
 }

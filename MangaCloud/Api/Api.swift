@@ -21,7 +21,7 @@ class Api{
         var request = URLRequest(url: NSURL(string: "https://mangacloudapi.azurewebsites.net/manga/\(manga_id)/\(chapter_name.removeZerosFromEnd())")! as URL)
         
 //        print("https://mangacloudapi.azurewebsites.net/manga/\(manga_id)/\(chapter_name.removeZerosFromEnd())")
-        request.addValue("Bearer \(user.accessToken)", forHTTPHeaderField: "Authorization")
+//        request.addValue("Bearer \(user.accessToken)", forHTTPHeaderField: "Authorization")
         
 //        print(request)
         
@@ -48,7 +48,7 @@ class Api{
         let request = NSMutableURLRequest(url: NSURL(string: "https://mangacloudapi.azurewebsites.net/manga/search?title=\(query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)")! as URL,
                                                 cachePolicy: .useProtocolCachePolicy,
                                             timeoutInterval: 10.0)
-        request.addValue("Bearer \(user.accessToken)", forHTTPHeaderField: "Authorization")
+//        request.addValue("Bearer \(user.accessToken)", forHTTPHeaderField: "Authorization")
         
         
         URLSession.shared.dataTask(with: request as URLRequest) { data, _, _ in
@@ -69,7 +69,7 @@ class Api{
         let request = NSMutableURLRequest(url: NSURL(string: "https://mangacloudapi.azurewebsites.net/manga/latest")! as URL,
                                                 cachePolicy: .useProtocolCachePolicy,
                                             timeoutInterval: 10.0)
-        request.addValue("Bearer \(user.accessToken)", forHTTPHeaderField: "Authorization")
+//        request.addValue("Bearer \(user.accessToken)", forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request as URLRequest) { data, _, _ in
             if (data != nil){
@@ -98,7 +98,7 @@ class Api{
         request.httpMethod = "POST"
         request.httpBody = postData as Data
         request.allHTTPHeaderFields = headers
-        request.addValue("Bearer \(user.accessToken)", forHTTPHeaderField: "Authorization")
+//        request.addValue("Bearer \(user.accessToken)", forHTTPHeaderField: "Authorization")
 
         
         URLSession.shared.dataTask(with: request as URLRequest) { data, _, _ in
