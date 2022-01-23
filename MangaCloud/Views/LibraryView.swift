@@ -8,32 +8,48 @@
 import SwiftUI
 
 struct LibraryView: View {
-    @EnvironmentObject var viewModel: LibraryViewModel
+    //    @EnvironmentObject var viewModel: LibraryViewModel
+    @ObservedObject var viewModel: LibraryViewModel
     
     @State private var selectedManga: MangaItem? = nil
     @State private var showDetailView: Bool = false
     
+    
+    init(){
+        print("Library View")
+        viewModel = LibraryViewModel()
+    }
+    
+    @ObservedObject private var user = UserModel.instance
     var body: some View {
         let library = viewModel.getLibrary()
-        
-        ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
-                ForEach(library, id: \.self) { manga in
-                    MangaItemView(manga: manga).onTapGesture {
-                        segue(manga: manga)
+        ZStack{
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
+                    ForEach(library, id: \.self) { manga in
+                        MangaItemView(manga: manga).onTapGesture {
+                            segue(manga: manga)
+                        }
                     }
                 }
             }
-        }
-        .background(content: {
-            NavigationLink(isActive: $showDetailView) {
-                MangaDetailView(manga: $selectedManga)
-            } label: {
-                EmptyView()
+            .background(content: {
+                NavigationLink(isActive: $showDetailView) {
+                    MangaDetailView(manga: $selectedManga)
+                } label: {
+                    EmptyView()
+                }
+            })
+            .navigationBarHidden(true)
+            if (library.isEmpty){
+                VStack {
+                    Text("Your library is Empty")
+                        .font(Font.largeTitle.weight(.bold))
+                    Text("Bookmark some manga!")
+                }
             }
-        })
-        .navigationBarHidden(true)
-            
+        }
+        //        }
     }
     
     private func segue(manga: MangaItem){

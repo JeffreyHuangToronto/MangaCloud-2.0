@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LatestView: View {
     @ObservedObject var viewModel: LatestViewModel
+    @ObservedObject var user = UserModel.instance
     
     @State private var selectedManga: MangaItem? = nil
     @State private var showDetailView: Bool = false
@@ -20,6 +21,11 @@ struct LatestView: View {
         self.viewModel = viewModel
         print("Init: Creating LatestView")
     }
+//
+//    init(){
+//        viewModel = LatestViewModel()
+//        print("Creating Latest View")
+//    }
     
     var searchResults: [MangaItem] {
         if searchText.isEmpty {
@@ -39,40 +45,49 @@ struct LatestView: View {
     
     
     var body: some View {
-        let latest = viewModel.getLatestManga().latest
-        
-        if  latest.count != 0 {
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
-                    ForEach(searchResults, id: \.self) { manga in
-                        MangaItemView(manga: manga)
-                            .onTapGesture {
-                                segue(manga: manga)
-                            }
+//        if (user.loggedIn){
+            let latest = viewModel.getLatestManga().latest
+            
+            if  latest.count != 0 {
+                ScrollView {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
+                        ForEach(searchResults, id: \.self) { manga in
+                            MangaItemView(manga: manga)
+                                .onTapGesture {
+                                    segue(manga: manga)
+                                }
+                        }
                     }
                 }
-            }
-            .searchable(text: $searchText)
-            .onSubmit(of: .search) {
-                getSearchResult()
-            }
-            
-            .navigationViewStyle(StackNavigationViewStyle())
-            .navigationBarTitle("Manga")
-            .navigationBarBackButtonHidden(true)
-            .navigationBarHidden(false)
-            .background(content: {
-                NavigationLink(isActive: $showDetailView) {
-                    MangaDetailView(manga: $selectedManga)
-                } label: {
-                    EmptyView()
+                .searchable(text: $searchText, prompt: Text("Search for manga"))
+                .onSubmit(of: .search) {
+                    getSearchResult()
                 }
                 
-            })
-        }
-        else{
-            Text("Loading Manga")
-        }
+                .navigationViewStyle(StackNavigationViewStyle())
+                .navigationBarTitle("Manga")
+                .navigationBarBackButtonHidden(true)
+                .navigationBarHidden(false)
+                .background(content: {
+                    NavigationLink(isActive: $showDetailView) {
+                        MangaDetailView(manga: $selectedManga)
+                    } label: {
+                        EmptyView()
+                    }
+                    
+                })
+            }
+            else{
+                Text("Loading Manga")
+            }
+//        }
+//        else{
+//            Text("Login to view manga")
+//        }
+       
+        
+        
+        
     }
     
     private func segue(manga: MangaItem){

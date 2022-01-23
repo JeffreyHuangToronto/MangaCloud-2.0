@@ -11,29 +11,50 @@ struct ChapterView: View {
     @ObservedObject var viewModel: ChapterViewModel
     @Environment(\.dismiss) var dismiss
     
-    //    var chapter_index: Int
-    private let libraryDataService = LibraryDataService.sharedInstance
-    private let readMangaDataService = ReadMangaDataService.sharedInstance
+    @State var progress: Float = 1
+    
+    // TODO: To be moved to settings
+    @State var spacingBetweenImages: CGFloat = 0
+    
+    
+    @State var lastScaleValue: CGFloat = 1.0
+    private var libraryDataService = LibraryDataService.sharedInstance
+    private var readMangaDataService = ReadMangaDataService.sharedInstance
     
     @State var toggle = false
     
     init(manga: MangaItem, chapter_index: Int, _ vm: ChapterViewModel){
         print("Initializing Chapter for: \(manga.title) \(chapter_index)")
-        //        viewModel = ChapterViewModel(manga: manga, chapter_index: chapter_index)
         viewModel = vm
         if (chapter_index != -1){
             readMangaDataService.setMangaChapterReadStatus(manga._id, chapter_index)
         }
     }
     
+    init(manga: MangaItem, chapter_index: Int){
+        print("Chapter for: \(manga.title) \(chapter_index)")
+        viewModel = ChapterViewModel(manga: manga, chapter_index: chapter_index)
+        if (chapter_index != -1){
+            readMangaDataService.setMangaChapterReadStatus(manga._id, chapter_index)
+        }
+    }
+    
+    
+    
     var body: some View {
+        
         ScrollView {
-            VStack {
+            
+            VStack(spacing: spacingBetweenImages) {
                 let urls = viewModel.getChapterUrls()
-                if (!viewModel.isLoaded()){
+                if (viewModel.progress != 4){
+                    VStack{
                     Text("Loading Chapter\n Please Wait")
+                        .font(Font.largeTitle.weight(.bold))
+                        ProgressView("Loading", value: viewModel.progress, total: 4).padding(15)
+                    }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height, alignment: .center)
                 }
-                else{
+                if (viewModel.progress == 4){
                     ForEach(urls, id: \.self){ i in
                         AsyncImage(url: URL(string: i))
                         { image in
@@ -41,12 +62,14 @@ struct ChapterView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                         } placeholder: {
-                            ProgressView()
+                            ProgressView().progressViewStyle(.circular)
                         }
                     }
+                    .frame(width: UIScreen.main.bounds.width)
                 }
             }
         }
+        
         .navigationTitle("")
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
@@ -55,6 +78,7 @@ struct ChapterView: View {
                 toggle.toggle()
             }
         }
+        .frame(width: UIScreen.main.bounds.width)
         .overlay(alignment: .bottom) {
             if (toggle){
                 Rectangle()
@@ -182,6 +206,7 @@ struct ChapterView: View {
                 EmptyView()
             }
         })
+        
     }
 }
 

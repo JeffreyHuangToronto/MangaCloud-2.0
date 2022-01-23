@@ -6,17 +6,31 @@
 //
 
 import Foundation
+import SwiftUI
 
 class Api{
+    
+    @ObservedObject var user = UserModel.instance
+    
     func getMangaChapter(manga_id: String, chapter_name: Double, completion: @escaping (MangaChapter) -> ()){
-        guard let url = URL(string: "https://mangacloudapi.azurewebsites.net/manga/\(manga_id)/\(chapter_name.removeZerosFromEnd())") else { return }
+//        guard let url = URL(string: "https://mangacloudapi.azurewebsites.net/manga/\(manga_id)/\(chapter_name.removeZerosFromEnd())") else { return }
         //        guard let url = URL(string: "http://localhost:8080/manga/\(manga_id)/\(chapter_name.removeZerosFromEnd())") else {
         //            return
         //        }
-        URLSession.shared.dataTask(with: url) { data, _, _ in
+        
+        var request = URLRequest(url: NSURL(string: "https://mangacloudapi.azurewebsites.net/manga/\(manga_id)/\(chapter_name.removeZerosFromEnd())")! as URL)
+        
+//        print("https://mangacloudapi.azurewebsites.net/manga/\(manga_id)/\(chapter_name.removeZerosFromEnd())")
+//        request.addValue("Bearer \(user.accessToken)", forHTTPHeaderField: "Authorization")
+        
+//        print(request)
+        
+        
+        URLSession.shared.dataTask(with: request) { data, _, _ in
             if (data != nil){
                 let chapter = try! JSONDecoder().decode(MangaChapter.self, from: data!)
                 DispatchQueue.main.async {
+//                    print(chapter)
                     completion(chapter)
                 }
             }
@@ -25,12 +39,19 @@ class Api{
     }
     
     func search(_ query: String, completion: @escaping (SearchItem) -> ()){
-        print("https://mangacloudapi.azurewebsites.net/manga/search?title=\(query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)")
-        guard let url = URL(string: "https://mangacloudapi.azurewebsites.net/manga/search?title=\(query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)") else { return }
+//        print("https://mangacloudapi.azurewebsites.net/manga/search?title=\(query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)")
+//        guard let url = URL(string: "https://mangacloudapi.azurewebsites.net/manga/search?title=\(query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)") else { return }
         //        guard let url = URL(string: "http://localhost:8080/manga/\(manga_id)/\(chapter_name.removeZerosFromEnd())") else {
         //            return
         //        }
-        URLSession.shared.dataTask(with: url) { data, _, _ in
+        
+        let request = NSMutableURLRequest(url: NSURL(string: "https://mangacloudapi.azurewebsites.net/manga/search?title=\(query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!)")! as URL,
+                                                cachePolicy: .useProtocolCachePolicy,
+                                            timeoutInterval: 10.0)
+//        request.addValue("Bearer \(user.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        
+        URLSession.shared.dataTask(with: request as URLRequest) { data, _, _ in
             if (data != nil){
                 let search = try! JSONDecoder().decode(SearchItem.self, from: data!)
                 DispatchQueue.main.async {
@@ -42,10 +63,15 @@ class Api{
     }
     
     func getLatestChapters(completion: @escaping (LatestMangaList) -> ()){
-        guard let url = URL(string: "https://mangacloudapi.azurewebsites.net/manga/latest") else { return }
+//        guard let url = URL(string: "https://mangacloudapi.azurewebsites.net/manga/latest") else { return }
         //        guard let url = URL(string: "http://localhost:8080/manga/latest") else { return }
         
-        URLSession.shared.dataTask(with: url) { data, _, _ in
+        let request = NSMutableURLRequest(url: NSURL(string: "https://mangacloudapi.azurewebsites.net/manga/latest")! as URL,
+                                                cachePolicy: .useProtocolCachePolicy,
+                                            timeoutInterval: 10.0)
+//        request.addValue("Bearer \(user.accessToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request as URLRequest) { data, _, _ in
             if (data != nil){
                 let chapter = try! JSONDecoder().decode(LatestMangaList.self, from: data!)
                 DispatchQueue.main.async {
@@ -68,18 +94,17 @@ class Api{
         let request = NSMutableURLRequest(url: NSURL(string: "https://mangacloudapi.azurewebsites.net/manga/library")! as URL,
                                           cachePolicy: .useProtocolCachePolicy,
                                           timeoutInterval: 10.0)
-        //        let request = NSMutableURLRequest(url: NSURL(string: "http://localhost:8080/manga/library")! as URL,
-        //                                                cachePolicy: .useProtocolCachePolicy,
-        //                                            timeoutInterval: 10.0)
+
         request.httpMethod = "POST"
         request.httpBody = postData as Data
         request.allHTTPHeaderFields = headers
+//        request.addValue("Bearer \(user.accessToken)", forHTTPHeaderField: "Authorization")
+
         
         URLSession.shared.dataTask(with: request as URLRequest) { data, _, _ in
             if (data != nil){
                 let libraryList = try! JSONDecoder().decode(Library.self, from: data!)
                 DispatchQueue.main.async {
-                    //                    print("Library: \(libraryList)")
                     completion(libraryList)
                 }
             }

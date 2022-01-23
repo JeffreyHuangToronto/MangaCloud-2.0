@@ -9,13 +9,13 @@ import SwiftUI
 
 struct MainContentView: View {
     @StateObject var viewRouter: ViewRouter
-    @StateObject var userLibraryViewModel = LibraryViewModel()
+    var userLibraryViewModel = LibraryViewModel()
     @StateObject var latestViewModel = LatestViewModel()
+    @ObservedObject var user = UserModel.instance
     
     @State var lastPage: Page = .library
     
     var body: some View {
-        
         GeometryReader { geometry in
             NavigationView {
                 VStack {
@@ -25,6 +25,7 @@ struct MainContentView: View {
                         LibraryView()
                     case .latest:
                         LatestView(viewModel: latestViewModel)
+//                        LatestView()
                     case .settings:
                         Settings()
                     }
@@ -42,6 +43,7 @@ struct MainContentView: View {
             }
             .environmentObject(userLibraryViewModel)
             .navigationViewStyle(StackNavigationViewStyle())
+            
         }
     }
     
@@ -49,7 +51,6 @@ struct MainContentView: View {
     struct ContentView_Previews: PreviewProvider {
         static var previews: some View {
             MainContentView(viewRouter: ViewRouter())
-                .previewInterfaceOrientation(.portrait)
         }
     }
 }

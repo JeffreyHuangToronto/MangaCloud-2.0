@@ -14,6 +14,7 @@ struct ChapterModel{
     private(set) var chapter_index: Int
     
     mutating func updateChapterImages(_ pages: Array<String>){
+//        print("Before: \(self.chapterImages) After: \(pages)")
         chapterImages = pages
     }
     
@@ -26,6 +27,7 @@ struct ChapterModel{
     }
     
     init(chapterIndex: Int){
+        print("Chapter Model")
         chapterImages = []
         chapter_index = chapterIndex
     }

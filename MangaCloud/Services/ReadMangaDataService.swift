@@ -14,11 +14,9 @@ class ReadMangaDataService: ObservableObject {
     let entityName: String = "ChapterReadEntity"
     
     static let sharedInstance = ReadMangaDataService()
-    
-    
+
     
     @Published var savedEntities: [ChapterReadEntity] = []
-//    @Published var refreshToggle: Bool = false
     
     private init() {
         container = NSPersistentContainer(name: containerName)
@@ -30,11 +28,6 @@ class ReadMangaDataService: ObservableObject {
         }
     }
     // MARK: PUBLIC
-    
-//    func refreshView() {
-//        print("Toggling")
-//        refreshToggle.toggle()
-//    }
     
     func getMangaChapterReadStatus(_ mangaId: String) -> Int?{
         if let entity = savedEntities.first(where: { $0.mangaId == mangaId }) {
@@ -95,7 +88,7 @@ class ReadMangaDataService: ObservableObject {
         } catch let error {
             print("Error fetching ReadEntities. \(error)")
         }
-        print("Fetched Read Status!")
+//        print("Fetched Read Status!")
     }
     
     private func add(_ mangaId: String, _ chapterIndex: Int64) {
