@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LibraryView: View {
-//    @EnvironmentObject var viewModel: LibraryViewModel
+    //    @EnvironmentObject var viewModel: LibraryViewModel
     @ObservedObject var viewModel: LibraryViewModel
     
     @State private var selectedManga: MangaItem? = nil
@@ -22,11 +22,8 @@ struct LibraryView: View {
     
     @ObservedObject private var user = UserModel.instance
     var body: some View {
-        
-//        if (!user.loggedIn){
-//            Text("Please login")
-//        } else {
-            let library = viewModel.getLibrary()
+        let library = viewModel.getLibrary()
+        ZStack{
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
                     ForEach(library, id: \.self) { manga in
@@ -44,7 +41,15 @@ struct LibraryView: View {
                 }
             })
             .navigationBarHidden(true)
-//        }
+            if (library.isEmpty){
+                VStack {
+                    Text("Your library is Empty")
+                        .font(Font.largeTitle.weight(.bold))
+                    Text("Bookmark some manga!")
+                }
+            }
+        }
+        //        }
     }
     
     private func segue(manga: MangaItem){

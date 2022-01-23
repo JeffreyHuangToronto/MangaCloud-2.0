@@ -59,7 +59,7 @@ struct LatestView: View {
                         }
                     }
                 }
-                .searchable(text: $searchText)
+                .searchable(text: $searchText, prompt: Text("Search for manga"))
                 .onSubmit(of: .search) {
                     getSearchResult()
                 }
