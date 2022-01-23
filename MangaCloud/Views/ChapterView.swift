@@ -11,8 +11,13 @@ struct ChapterView: View {
     @ObservedObject var viewModel: ChapterViewModel
     @Environment(\.dismiss) var dismiss
     
+    @State var progress: Float = 1
+    
+    // TODO: To be moved to settings
+    @State var spacingBetweenImages: CGFloat = 0
+    
+    
     @State var lastScaleValue: CGFloat = 1.0
-    //    var chapter_index: Int
     private var libraryDataService = LibraryDataService.sharedInstance
     private var readMangaDataService = ReadMangaDataService.sharedInstance
     
@@ -37,17 +42,19 @@ struct ChapterView: View {
     
     
     var body: some View {
+        
         ScrollView {
-            VStack {
+            
+            VStack(spacing: spacingBetweenImages) {
                 let urls = viewModel.getChapterUrls()
-                if (!viewModel.isLoaded()){
+                if (viewModel.progress != 4){
                     VStack{
                     Text("Loading Chapter\n Please Wait")
                         .font(Font.largeTitle.weight(.bold))
-                        ProgressView().progressViewStyle(.linear)
+                        ProgressView("Loading", value: viewModel.progress, total: 4).padding(15)
                     }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height, alignment: .center)
                 }
-                else{
+                if (viewModel.progress == 4){
                     ForEach(urls, id: \.self){ i in
                         AsyncImage(url: URL(string: i))
                         { image in
@@ -55,12 +62,14 @@ struct ChapterView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                         } placeholder: {
-                            ProgressView()
+                            ProgressView().progressViewStyle(.circular)
                         }
                     }
+                    .frame(width: UIScreen.main.bounds.width)
                 }
             }
         }
+        
         .navigationTitle("")
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
