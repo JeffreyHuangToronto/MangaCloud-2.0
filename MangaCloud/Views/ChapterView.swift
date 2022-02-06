@@ -15,6 +15,8 @@ struct ChapterView: View {
     
     // TODO: To be moved to settings
     @State var spacingBetweenImages: CGFloat = 0
+    @State var toggleChapterList = false
+    @State var sensitivity = 0.0
     
     
     @State var lastScaleValue: CGFloat = 1.0
@@ -44,30 +46,43 @@ struct ChapterView: View {
     var body: some View {
         
         ScrollView {
-            
-            VStack(spacing: spacingBetweenImages) {
-                let urls = viewModel.getChapterUrls()
-                if (viewModel.progress != 4){
-                    VStack{
-                    Text("Loading Chapter\n Please Wait")
-                        .font(Font.largeTitle.weight(.bold))
-                        ProgressView("Loading", value: viewModel.progress, total: 4).padding(15)
-                    }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height, alignment: .center)
-                }
-                if (viewModel.progress == 4){
-                    ForEach(urls, id: \.self){ i in
-                        AsyncImage(url: URL(string: i))
-                        { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                        } placeholder: {
-                            ProgressView().progressViewStyle(.circular)
+//            Slider(
+//                    value: $sensitivity,
+//                    in: 0...Double(viewModel.manga.chapter_names.count),
+//                    step: 1
+//                ) {
+//                    Text("Speed")
+//                } minimumValueLabel: {
+//                    Text("\(viewModel.manga.chapter_names[0].removeZerosFromEnd())")
+//                } maximumValueLabel: {
+////                    Text("100")
+//                    Text("\(viewModel.manga.chapter_names[viewModel.manga.chapter_names.count - 1].removeZerosFromEnd())")
+//                }
+//            Text("Chapter: \(viewModel.manga.chapter_names[])")
+                        VStack(spacing: spacingBetweenImages) {
+                            let urls = viewModel.getChapterUrls()
+                            if (viewModel.progress != 4){
+                                VStack{
+                                    Text("Loading Chapter\n Please Wait")
+                                        .font(Font.largeTitle.weight(.bold))
+                                    ProgressView("Loading", value: viewModel.progress, total: 4).padding(15)
+                                }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height, alignment: .center)
+                            }
+                            if (viewModel.progress == 4){
+                                ForEach(urls, id: \.self){ i in
+                                    AsyncImage(url: URL(string: i))
+                                    { image in
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                    } placeholder: {
+                                        ProgressView().progressViewStyle(.circular)
+                                    }
+                                }
+                                .frame(width: UIScreen.main.bounds.width)
+                            }
                         }
-                    }
-                    .frame(width: UIScreen.main.bounds.width)
-                }
-            }
+                        .statusBar(hidden: !toggle)
         }
         
         .navigationTitle("")
@@ -86,7 +101,6 @@ struct ChapterView: View {
                     .edgesIgnoringSafeArea(.bottom)
                     .frame(height: ThemeSettings.bottomBarHeight)
                     .opacity(ThemeSettings.menuOpacity)
-                
                     .transition(.move(edge: .bottom))
                     .overlay(alignment: .top) {
                         VStack {
@@ -105,7 +119,8 @@ struct ChapterView: View {
                                 Spacer()
                                 Button
                                 {
-                                    viewModel.goBack()
+                                    //                                    viewModel.goBack()
+                                    toggleChapterList.toggle()
                                 } label: {
                                     Image(systemName: "text.justify")
                                         .resizable()
@@ -113,6 +128,7 @@ struct ChapterView: View {
                                         .frame(width: ThemeSettings.largeIconSize, height: ThemeSettings.largeIconSize)
                                         .tint(ThemeSettings.buttonColor)
                                 }
+                                
                                 Spacer()
                                 Button
                                 {

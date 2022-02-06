@@ -18,7 +18,7 @@ class Api{
         //            return
         //        }
         
-        var request = URLRequest(url: NSURL(string: "https://mangacloudapi.azurewebsites.net/manga/\(manga_id)/\(chapter_name.removeZerosFromEnd())")! as URL)
+        let request = URLRequest(url: NSURL(string: "https://mangacloudapi.azurewebsites.net/manga/\(manga_id)/\(chapter_name.removeZerosFromEnd())")! as URL)
         
 //        print("https://mangacloudapi.azurewebsites.net/manga/\(manga_id)/\(chapter_name.removeZerosFromEnd())")
 //        request.addValue("Bearer \(user.accessToken)", forHTTPHeaderField: "Authorization")

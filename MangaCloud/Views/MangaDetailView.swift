@@ -31,7 +31,7 @@ struct MangaDetailView: View {
     var body: some View {
         ZStack {
             ScrollView {
-                VStack {
+                VStack(alignment: .leading) {
                     HStack(alignment: .center){
                         coverImage
                         title
@@ -91,6 +91,7 @@ struct MangaDetailView: View {
             image
                 .resizable()
                 .aspectRatio(3/4, contentMode: .fit)
+                .frame(maxWidth: 300)
                 .overlay(
                     RoundedRectangle(cornerRadius: 2)
                         .stroke(Color.white, lineWidth: 3)
