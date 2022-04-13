@@ -8,27 +8,31 @@
 import SwiftUI
 
 struct MainContentView: View {
-    @StateObject var viewRouter: ViewRouter
+    @EnvironmentObject var viewRouter: ViewRouter
     var userLibraryViewModel = LibraryViewModel()
-    @StateObject var latestViewModel = LatestViewModel()
+    @EnvironmentObject var latestViewModel: LatestViewModel
     @ObservedObject var user = UserModel.instance
     
     @State var lastPage: Page = .library
+    
+    init(){
+        print("New Main Content View")
+    }
     
     var body: some View {
         GeometryReader { geometry in
             NavigationView {
                 VStack {
                     // Decide which view to show
-                    //                    switch viewRouter.currentPage {
-                    //                    case .library:
-                    //                        LibraryView()
-                    //                    case .latest:
-                    //                        LatestView(viewModel: latestViewModel)
-                    ////                        LatestView()
-                    //                    case .settings:
-                    //                        Settings()
-                    //                    }
+//                    switch viewRouter.currentPage {
+//                    case .library:
+//                        LibraryView()
+//                    case .latest:
+//                        LatestView(viewModel: latestViewModel)
+//                        //                        LatestView()
+//                    case .settings:
+//                        Settings()
+//                    }
                     ZStack {
                         LibraryView().hidden(viewRouter.currentPage != Page.library)
                         LatestView(viewModel: latestViewModel).hidden(viewRouter.currentPage != Page.latest)
@@ -54,8 +58,10 @@ struct MainContentView: View {
     
     
     struct ContentView_Previews: PreviewProvider {
+        
         static var previews: some View {
-            MainContentView(viewRouter: ViewRouter())
+            let viewRouter = ViewRouter()
+            MainContentView().environmentObject(viewRouter)
         }
     }
 }

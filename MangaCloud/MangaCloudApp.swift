@@ -11,10 +11,15 @@ import SwiftUI
 struct MangaCloudApp: App {
     
     @StateObject var viewRouter = ViewRouter()
+    @StateObject var latestViewModel = LatestViewModel()
+    @StateObject var libraryViewModel = LibraryViewModel()
     
     var body: some Scene {
         WindowGroup {
-            MainContentView(viewRouter: viewRouter)
+            MainContentView()
+                .environmentObject(viewRouter)
+                .environmentObject(latestViewModel)
+                .environmentObject(libraryViewModel)
         }
     }
 }
