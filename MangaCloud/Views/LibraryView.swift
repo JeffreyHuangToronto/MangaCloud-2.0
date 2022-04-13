@@ -41,13 +41,13 @@ struct LibraryView: View {
                 }
             })
             .navigationBarHidden(true)
-            if (library.isEmpty){
+//            if (library.isEmpty){
                 VStack {
                     Text("Your library is Empty")
                         .font(Font.largeTitle.weight(.bold))
                     Text("Bookmark some manga!")
-                }
-            }
+                }.hidden(!library.isEmpty)
+//            }
         }
         //        }
     }

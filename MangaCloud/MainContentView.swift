@@ -20,14 +20,19 @@ struct MainContentView: View {
             NavigationView {
                 VStack {
                     // Decide which view to show
-                    switch viewRouter.currentPage {
-                    case .library:
-                        LibraryView()
-                    case .latest:
-                        LatestView(viewModel: latestViewModel)
-//                        LatestView()
-                    case .settings:
-                        Settings()
+                    //                    switch viewRouter.currentPage {
+                    //                    case .library:
+                    //                        LibraryView()
+                    //                    case .latest:
+                    //                        LatestView(viewModel: latestViewModel)
+                    ////                        LatestView()
+                    //                    case .settings:
+                    //                        Settings()
+                    //                    }
+                    ZStack {
+                        LibraryView().hidden(viewRouter.currentPage != Page.library)
+                        LatestView(viewModel: latestViewModel).hidden(viewRouter.currentPage != Page.latest)
+                        Settings().hidden(viewRouter.currentPage != Page.settings)
                     }
                     Spacer()
                     // Tab bar items
