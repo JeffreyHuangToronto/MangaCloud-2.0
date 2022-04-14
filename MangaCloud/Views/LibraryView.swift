@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct LibraryView: View {
-    //    @EnvironmentObject var viewModel: LibraryViewModel
-    @ObservedObject var viewModel: LibraryViewModel
+    @EnvironmentObject var viewModel: LibraryViewModel
+    //    @ObservedObject var viewModel: LibraryViewModel
     
     @State private var selectedManga: MangaItem? = nil
     @State private var showDetailView: Bool = false
@@ -17,7 +17,7 @@ struct LibraryView: View {
     
     init(){
         print("Library View")
-        viewModel = LibraryViewModel()
+//        viewModel = LibraryViewModel()
     }
     
     @ObservedObject private var user = UserModel.instance
@@ -41,13 +41,13 @@ struct LibraryView: View {
                 }
             })
             .navigationBarHidden(true)
-//            if (library.isEmpty){
-                VStack {
-                    Text("Your library is Empty")
-                        .font(Font.largeTitle.weight(.bold))
-                    Text("Bookmark some manga!")
-                }.hidden(!library.isEmpty)
-//            }
+            //            if (library.isEmpty){
+            VStack {
+                Text("Your library is Empty")
+                    .font(Font.largeTitle.weight(.bold))
+                Text("Bookmark some manga!")
+            }.hidden(!library.isEmpty)
+            //            }
         }
         //        }
     }

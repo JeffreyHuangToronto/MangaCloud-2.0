@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct MainContentView: View {
-    @EnvironmentObject var viewRouter: ViewRouter
+    @ObservedObject var viewRouter = ViewRouter()
     var userLibraryViewModel = LibraryViewModel()
-    @EnvironmentObject var latestViewModel: LatestViewModel
-    @ObservedObject var user = UserModel.instance
+    @ObservedObject var latestViewModel = LatestViewModel()
+    //    @ObservedObject var user = UserModel.instance
     
     @State var lastPage: Page = .library
     
@@ -24,17 +24,17 @@ struct MainContentView: View {
             NavigationView {
                 VStack {
                     // Decide which view to show
-//                    switch viewRouter.currentPage {
-//                    case .library:
-//                        LibraryView()
-//                    case .latest:
-//                        LatestView(viewModel: latestViewModel)
-//                        //                        LatestView()
-//                    case .settings:
-//                        Settings()
-//                    }
+                    //                    switch viewRouter.currentPage {
+                    //                    case .library:
+                    //                        LibraryView()
+                    //                    case .latest:
+                    //                        LatestView(viewModel: latestViewModel)
+                    //                        //                        LatestView()
+                    //                    case .settings:
+                    //                        Settings()
+                    //                    }
                     ZStack {
-                        LibraryView().hidden(viewRouter.currentPage != Page.library)
+                        LibraryView().hidden(viewRouter.currentPage != Page.library).environmentObject(userLibraryViewModel)
                         LatestView(viewModel: latestViewModel).hidden(viewRouter.currentPage != Page.latest)
                         Settings().hidden(viewRouter.currentPage != Page.settings)
                     }
