@@ -21,11 +21,11 @@ struct LatestView: View {
         self.viewModel = viewModel
         print("Init: Creating LatestView")
     }
-//
-//    init(){
-//        viewModel = LatestViewModel()
-//        print("Creating Latest View")
-//    }
+    //
+    //    init(){
+    //        viewModel = LatestViewModel()
+    //        print("Creating Latest View")
+    //    }
     
     var searchResults: [MangaItem] {
         if searchText.isEmpty {
@@ -45,46 +45,64 @@ struct LatestView: View {
     
     
     var body: some View {
-//        if (user.loggedIn){
-            let latest = viewModel.getLatestManga().latest
-            
-            if  latest.count != 0 {
-                ScrollView {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
+        //        if (user.loggedIn){
+        let latest = viewModel.getLatestManga().latest
+        
+        if  latest.count != 0 {
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150, maximum: 250))]){
+                    ForEach(searchResults, id: \.self) { manga in
+                        MangaItemView(manga: manga)
+                            .onTapGesture {
+                                segue(manga: manga)
+                            }
+                    }
+                }
+                //                Spacer()
+                Text("Trending").font(Font.largeTitle.weight(.bold))
+                ScrollView(.horizontal){
+                    HStack(alignment: VerticalAlignment.top, spacing: 10){
+                        
                         ForEach(searchResults, id: \.self) { manga in
                             MangaItemView(manga: manga)
                                 .onTapGesture {
                                     segue(manga: manga)
                                 }
                         }
+                    }.background(){
+                        Color.red
                     }
-                }
-                .searchable(text: $searchText, prompt: Text("Search for manga"))
-                .onSubmit(of: .search) {
-                    getSearchResult()
+//                    .padding(35)
+                }.frame(height: 250)
+                    .padding(Edge.Set.bottom, 20)
+                
+            }
+            .searchable(text: $searchText, prompt: Text("Search for manga"))
+            .onSubmit(of: .search) {
+                getSearchResult()
+            }
+            
+            .navigationViewStyle(StackNavigationViewStyle())
+            .navigationBarTitle("Manga")
+            .navigationBarBackButtonHidden(true)
+            .navigationBarHidden(false)
+            .background(content: {
+                NavigationLink(isActive: $showDetailView) {
+                    MangaDetailView(manga: $selectedManga)
+                } label: {
+                    EmptyView()
                 }
                 
-                .navigationViewStyle(StackNavigationViewStyle())
-                .navigationBarTitle("Manga")
-                .navigationBarBackButtonHidden(true)
-                .navigationBarHidden(false)
-                .background(content: {
-                    NavigationLink(isActive: $showDetailView) {
-                        MangaDetailView(manga: $selectedManga)
-                    } label: {
-                        EmptyView()
-                    }
-                    
-                })
-            }
-            else{
-                Text("Loading Manga")
-            }
-//        }
-//        else{
-//            Text("Login to view manga")
-//        }
-       
+            })
+        }
+        else{
+            Text("Loading Manga")
+        }
+        //        }
+        //        else{
+        //            Text("Login to view manga")
+        //        }
+        
         
         
         
@@ -112,7 +130,7 @@ struct MangaItemView: View {
                         .resizable()
                         .aspectRatio(3/4, contentMode: .fill) // Displays the loaded image.
                         .clipShape(RoundedRectangle(cornerRadius: 5))
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .frame(width: 150, height: 200)
                 } else if phase.error != nil {
                     ProgressView()
                         .frame(width: 150, height: 200)
@@ -128,6 +146,7 @@ struct MangaItemView: View {
                     .font(.system(size: 12, weight: .bold, design: .rounded))
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
             }
+            .frame(height: 250)
             .padding(ThemeSettings.normalPadding)
             //                .border(Color.red)
         }

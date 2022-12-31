@@ -13,7 +13,7 @@ class Api{
     @ObservedObject var user = UserModel.instance
     
 //    let URL = "http://localhost:8080"
-    let URL = "https://manga-cloud-api.herokuapp.com"
+    let URL = "https://cb26-184-148-35-66.ngrok.io"
     
     func getMangaChapter(manga_id: String, chapter_name: Double, completion: @escaping (MangaChapter) -> ()){
         let request = URLRequest(url: NSURL(string: "\(URL)/manga/\(manga_id)/\(chapter_name.removeZerosFromEnd())")! as URL)
